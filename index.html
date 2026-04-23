@@ -29,7 +29,7 @@
   /* ══ PORTADA ══ */
   #portada {
     position: fixed; inset: 0; z-index: 100;
-    display: flex; flex-direction: column; align-items: center; justify-content: center;
+    display: none; flex-direction: column; align-items: center; justify-content: center;
     background: linear-gradient(135deg, #061e1e 0%, #0a3d38 40%, #0d5e55 70%, #0a4a4a 100%);
     transition: opacity 0.8s ease, transform 0.8s ease;
   }
@@ -118,6 +118,74 @@
   }
   .music-btn:hover { background: rgba(46,203,184,0.2); }
   .music-btn svg { width: 18px; height: 18px; }
+
+  /* ══ LOGIN ══ */
+  #loginOverlay {
+    position: fixed; inset: 0; z-index: 150;
+    display: flex; flex-direction: column; align-items: center; justify-content: center;
+    background: linear-gradient(135deg, #061e1e 0%, #0a3d38 40%, #0d5e55 70%, #0a4a4a 100%);
+    transition: opacity 0.6s ease;
+  }
+  #loginOverlay::before {
+    content: ""; position: absolute; inset: 0;
+    background: radial-gradient(ellipse at 50% 40%, rgba(46,203,184,0.12) 0%, transparent 60%);
+    pointer-events: none;
+  }
+  #loginOverlay.ocultar { opacity: 0; pointer-events: none; }
+
+  .login-box {
+    position: relative; z-index: 1;
+    display: flex; flex-direction: column; align-items: center; gap: 20px;
+    background: rgba(255,255,255,0.04); border: 1px solid rgba(46,203,184,0.18);
+    border-radius: 20px; padding: 42px 48px; backdrop-filter: blur(14px);
+    box-shadow: 0 0 60px rgba(46,203,184,0.08);
+    min-width: 300px;
+  }
+  .login-titulo {
+    font-family: "Bebas Neue", cursive; font-size: 22px; letter-spacing: 4px;
+    color: var(--teal-light); text-transform: uppercase; text-align: center;
+  }
+  .login-sub {
+    font-size: 10px; letter-spacing: 2px; color: var(--gray);
+    text-transform: uppercase; font-weight: 600; text-align: center; margin-top: -12px;
+  }
+  .login-divider {
+    width: 60px; height: 1px;
+    background: linear-gradient(90deg, transparent, var(--teal-light), transparent);
+    margin: 0 auto;
+  }
+  .login-input-wrap { position: relative; width: 100%; }
+  .login-input {
+    width: 100%; padding: 13px 44px 13px 16px;
+    background: rgba(255,255,255,0.05); border: 1px solid rgba(46,203,184,0.25);
+    border-radius: 10px; color: var(--white); font-family: "Montserrat", sans-serif;
+    font-size: 13px; font-weight: 500; letter-spacing: 2px; outline: none;
+    transition: border-color 0.2s;
+  }
+  .login-input:focus { border-color: rgba(46,203,184,0.6); }
+  .login-input.error { border-color: rgba(224,108,108,0.7); animation: shake 0.35s ease; }
+  @keyframes shake {
+    0%,100%{transform:translateX(0)} 20%{transform:translateX(-6px)} 60%{transform:translateX(6px)}
+  }
+  .toggle-pass {
+    position: absolute; right: 12px; top: 50%; transform: translateY(-50%);
+    background: none; border: none; cursor: pointer; color: var(--gray);
+    display: flex; align-items: center; padding: 0; transition: color 0.2s;
+  }
+  .toggle-pass:hover { color: var(--teal-glow); }
+  .toggle-pass svg { width: 16px; height: 16px; }
+  .login-error {
+    font-size: 10px; color: var(--red); letter-spacing: 1px; font-weight: 600;
+    text-transform: uppercase; min-height: 14px; text-align: center;
+  }
+  .login-btn {
+    width: 100%; padding: 13px; border-radius: 10px;
+    background: linear-gradient(135deg, var(--teal-mid), var(--teal-light));
+    color: #061a1a; font-weight: 700; font-size: 12px; letter-spacing: 2px;
+    text-transform: uppercase; border: none; cursor: pointer;
+    box-shadow: 0 0 20px rgba(46,203,184,0.35); transition: all 0.2s;
+  }
+  .login-btn:hover { transform: translateY(-1px); box-shadow: 0 0 30px rgba(46,203,184,0.5); }
 
   /* ══ DASHBOARD ══ */
   #dashboard { display: none; }
@@ -317,6 +385,25 @@
   <source src="https://www.soundhelix.com/examples/mp3/SoundHelix-Song-1.mp3" type="audio/mpeg">
 </audio>
 
+<!-- ══ LOGIN ══ -->
+<div id="loginOverlay">
+  <div class="login-box">
+    <div class="login-titulo">Acceso Restringido</div>
+    <div class="login-sub">Panel de Control · Lo Que Faltaba</div>
+    <div class="login-divider"></div>
+    <div class="login-input-wrap">
+      <input class="login-input" type="password" id="inputPass" placeholder="Contraseña" onkeydown="if(event.key==='Enter') verificarPass()">
+      <button class="toggle-pass" onclick="togglePass()" title="Mostrar/ocultar">
+        <svg id="iconOjo" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+          <path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"/><circle cx="12" cy="12" r="3"/>
+        </svg>
+      </button>
+    </div>
+    <div class="login-error" id="loginError"></div>
+    <button class="login-btn" onclick="verificarPass()">Ingresar al Panel</button>
+  </div>
+</div>
+
 <!-- ══ DASHBOARD ══ -->
 <div id="dashboard">
   <div class="loading-bar" id="loadingBar"></div>
@@ -416,6 +503,39 @@
 <script>
 const API_URL = "https://script.google.com/macros/s/AKfycbyrnwVCzeo4BeCQVOvXvikzDjbg_MIVneRZ42WvWlgVksdG0r3Vh14bKJ4wi-z1qTcN/exec";
 let musicaActiva = false;
+const PASS = "MiaBenito";
+
+function verificarPass() {
+  const input = document.getElementById("inputPass");
+  const error = document.getElementById("loginError");
+  if (input.value === PASS) {
+    document.getElementById("loginOverlay").classList.add("ocultar");
+    setTimeout(function() {
+      document.getElementById("loginOverlay").style.display = "none";
+      document.getElementById("portada").style.display = "flex";
+      setTimeout(function() {
+        document.getElementById("portada").classList.remove("ocultar");
+      }, 50);
+    }, 600);
+  } else {
+    error.textContent = "Contraseña incorrecta";
+    input.classList.add("error");
+    input.value = "";
+    setTimeout(function() { input.classList.remove("error"); error.textContent = ""; }, 1500);
+  }
+}
+
+function togglePass() {
+  const input = document.getElementById("inputPass");
+  const icon = document.getElementById("iconOjo");
+  if (input.type === "password") {
+    input.type = "text";
+    icon.innerHTML = "<line x1='1' y1='1' x2='23' y2='23'/><path d='M17.94 17.94A10.07 10.07 0 0 1 12 20c-7 0-11-8-11-8a18.45 18.45 0 0 1 5.06-5.94M9.9 4.24A9.12 9.12 0 0 1 12 4c7 0 11 8 11 8a18.5 18.5 0 0 1-2.16 3.19m-6.72-1.07a3 3 0 1 1-4.24-4.24'/>";
+  } else {
+    input.type = "password";
+    icon.innerHTML = "<path d='M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z'/><circle cx='12' cy='12' r='3'/>";
+  }
+}
 
 function entrarAlPanel() {
   document.getElementById("portada").classList.add("ocultar");
