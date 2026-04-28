@@ -192,6 +192,48 @@ body::before{content:"";position:fixed;inset:0;background:radial-gradient(ellips
 ::-webkit-scrollbar-track{background:transparent;}
 ::-webkit-scrollbar-thumb{background:var(--teal-mid);border-radius:4px;}
 </style>
+<!-- CONTROL DE LICENCIA -->
+<script>
+(function(){
+  var CONTROL_URL = "https://script.google.com/macros/s/AKfycbwlM0gexbjIQTshIgWYG2Gy2t49P-M3WrOlpv6HJ7tuDj4XMskvCFfAuz8Iz86Ri9M3Tg/exec";
+  var DOMINIO = "loquefaltaba-estetica.github.io";
+  document.documentElement.style.visibility = "hidden";
+  var cbName = "licCheck" + Date.now();
+  window[cbName] = function(data){
+    delete window[cbName];
+    if(data.activo){
+      document.documentElement.style.visibility = "visible";
+    } else {
+      document.documentElement.style.visibility = "visible";
+      document.body.innerHTML = [
+        "<div style='display:flex;flex-direction:column;align-items:center;justify-content:center;",
+        "min-height:100vh;background:linear-gradient(135deg,#061e1e 0%,#0a3d38 40%,#0d5e55 70%,#0a4a4a 100%);",
+        "font-family:Montserrat,sans-serif;color:#f0faf9;text-align:center;padding:2rem;'>",
+        "<div style='background:rgba(255,255,255,0.04);border:1px solid rgba(224,108,108,0.3);",
+        "border-radius:20px;padding:48px 52px;backdrop-filter:blur(14px);max-width:420px;'>",
+        "<div style='font-size:2.8rem;margin-bottom:1rem;'>&#x1F512;</div>",
+        "<div style='font-family:Bebas Neue,cursive;font-size:18px;letter-spacing:4px;",
+        "color:#e06c6c;text-transform:uppercase;margin-bottom:14px;'>Sistema Suspendido</div>",
+        "<p style='color:#7aada8;font-size:12px;font-weight:500;line-height:1.7;'>",
+        "El acceso fue suspendido temporalmente.<br>Contactate con tu proveedor para regularizar tu cuenta.</p>",
+        "<a href='https://wa.me/5491133252814' target='_blank' style='display:inline-flex;align-items:center;",
+        "gap:8px;margin-top:24px;padding:12px 24px;border-radius:30px;background:#25d366;",
+        "color:white;font-size:12px;font-weight:700;text-decoration:none;letter-spacing:1px;'>",
+        "Contactar a Diego</a>",
+        "<div style='margin-top:24px;font-size:10px;letter-spacing:2px;color:#475569;text-transform:uppercase;'>",
+        "Lo Que Faltaba &middot; Sistema de Gesti&oacute;n</div>",
+        "</div></div>"
+      ].join("");
+    }
+  };
+  var s = document.createElement("script");
+  s.src = CONTROL_URL + "?callback=" + cbName + "&dominio=" + encodeURIComponent(DOMINIO);
+  s.onerror = function(){ delete window[cbName]; document.documentElement.style.visibility = "visible"; };
+  document.head.appendChild(s);
+})();
+</script>
+<!-- FIN CONTROL DE LICENCIA -->
+
 </head>
 <body>
 
