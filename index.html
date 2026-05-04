@@ -143,9 +143,9 @@ body::before{content:"";position:fixed;inset:0;background:radial-gradient(ellips
 .f-panel:hover{color:rgba(46,203,184,0.3);}
 .f-copy{margin-top:10px;font-size:9px;letter-spacing:2px;text-transform:uppercase;color:rgba(240,250,249,0.09);}
 
-.wa-fx{position:fixed;bottom:28px;right:28px;z-index:100;width:50px;height:50px;border-radius:50%;background:#25D366;display:flex;align-items:center;justify-content:center;cursor:pointer;text-decoration:none;box-shadow:0 4px 18px rgba(37,211,102,0.32);transition:all 0.3s;}
+.wa-fx{position:fixed;bottom:28px;right:28px;z-index:300;width:50px;height:50px;border-radius:50%;background:#25D366;display:flex;align-items:center;justify-content:center;cursor:pointer;text-decoration:none;box-shadow:0 4px 18px rgba(37,211,102,0.32);transition:all 0.3s;}
 .wa-fx:hover{transform:scale(1.1);}
-.mus-btn{position:fixed;bottom:28px;left:28px;z-index:100;display:flex;align-items:center;gap:7px;padding:9px 16px;border-radius:30px;background:rgba(6,30,30,0.9);border:1px solid rgba(46,203,184,0.28);color:var(--tg);font-size:10px;font-weight:700;letter-spacing:1.5px;text-transform:uppercase;cursor:pointer;backdrop-filter:blur(8px);transition:all 0.2s;}
+.mus-btn{position:fixed;bottom:28px;left:28px;z-index:300;display:flex;align-items:center;gap:7px;padding:9px 16px;border-radius:30px;background:rgba(6,30,30,0.9);border:1px solid rgba(46,203,184,0.28);color:var(--tg);font-size:10px;font-weight:700;letter-spacing:1.5px;text-transform:uppercase;cursor:pointer;backdrop-filter:blur(8px);transition:all 0.2s;}
 .mus-btn:hover{border-color:rgba(46,203,184,0.55);}
 .bars{display:flex;gap:2px;align-items:center;height:13px;}
 .bar{width:2px;background:var(--tl);border-radius:1px;}
@@ -186,14 +186,6 @@ body::before{content:"";position:fixed;inset:0;background:radial-gradient(ellips
   <h1 class="hero-titulo">Lo Que<br><em>Faltaba</em></h1>
   <p class="hero-sub">Cecilia Corsino · Ramos Mejía</p>
   <p class="hero-tagline">Un espacio donde cada tratamiento es una experiencia pensada para vos.</p>
-  <div class="hero-divider" style="width:80px;height:1px;background:linear-gradient(90deg,transparent,var(--tl),transparent);margin:24px auto;animation:fadeUp 0.8s ease 0.8s both;"></div>
-  <div class="hero-ctas">
-    <button class="btn-p" onclick="abrirReserva()">
-      <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="4" width="18" height="18" rx="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/></svg>
-      Reservar turno
-    </button>
-    <a href="#anamnesis" class="btn-o">Ficha médica</a>
-  </div>
   <div class="scroll-hint"><span>Servicios</span><div class="scroll-line"></div></div>
 </section>
 
@@ -202,12 +194,6 @@ body::before{content:"";position:fixed;inset:0;background:radial-gradient(ellips
     <p class="sec-lbl">Lo que hacemos</p>
     <h2 class="sec-tit">Nuestros <em>tratamientos</em></h2>
     <div class="srv-grid" id="srvGrid"></div>
-    <div style="text-align:center;margin-top:28px;">
-      <button class="btn-p" onclick="abrirReserva()">
-        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="4" width="18" height="18" rx="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/></svg>
-        Reservar turno
-      </button>
-    </div>
   </div>
 </section>
 
@@ -274,7 +260,7 @@ body::before{content:"";position:fixed;inset:0;background:radial-gradient(ellips
 <div class="m-res" id="mRes">
   <button class="m-close" onclick="cerrarReserva()">✕</button>
   <div class="m-res-in">
-    <p class="sec-lbl">Pedí tu turno</p>
+    <p style="font-family:'Bebas Neue',cursive;font-size:12px;letter-spacing:4px;color:var(--tl);text-transform:uppercase;margin-bottom:14px;">Pedí tu turno</p>
     <h2 class="sec-tit" style="margin-bottom:28px;">Reservá <em>online</em></h2>
     <p style="font-size:12px;color:var(--gr);margin-bottom:14px;letter-spacing:0.5px;">Seleccioná uno o más servicios:</p>
     <div class="srv-grid" id="srvGridModal" style="grid-template-columns:repeat(auto-fill,minmax(155px,1fr));gap:10px;margin-bottom:28px;"></div>
@@ -349,12 +335,20 @@ const SRVS=[
 let sel=[];
 
 function mkCard(s,mini){
-  return `<div class="srv-card${s.go?' style="border-color:rgba(201,169,110,0.18)"':''}" id="c${s.id}${mini?'m':''}" onclick="tog('${s.id}',${mini})">
-    <div class="srv-chk"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg></div>
-    <div class="srv-ico"${s.go?' style="background:rgba(201,169,110,0.08);border-color:rgba(201,169,110,0.2);"':''}>${s.ic}</div>
-    <div class="srv-nm"${s.go?' style="color:#e8d5b0;"':''}>${s.nm}</div>
-    <div class="srv-ds">${s.ds}</div>
-  </div>`;
+  if(mini){
+    return `<div class="srv-card${s.go?' style="border-color:rgba(201,169,110,0.18)"':''}" id="c${s.id}m" onclick="tog('${s.id}')">
+      <div class="srv-chk"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg></div>
+      <div class="srv-ico"${s.go?' style="background:rgba(201,169,110,0.08);border-color:rgba(201,169,110,0.2);"':''}>${s.ic}</div>
+      <div class="srv-nm"${s.go?' style="color:#e8d5b0;"':''}>${s.nm}</div>
+      <div class="srv-ds">${s.ds}</div>
+    </div>`;
+  } else {
+    return `<div class="srv-card" style="cursor:default;${s.go?'border-color:rgba(201,169,110,0.18);':''}">
+      <div class="srv-ico"${s.go?' style="background:rgba(201,169,110,0.08);border-color:rgba(201,169,110,0.2);"':''}>${s.ic}</div>
+      <div class="srv-nm"${s.go?' style="color:#e8d5b0;"':''}>${s.nm}</div>
+      <div class="srv-ds">${s.ds}</div>
+    </div>`;
+  }
 }
 
 function renderGrids(){
@@ -362,14 +356,12 @@ function renderGrids(){
   document.getElementById("srvGridModal").innerHTML=SRVS.map(s=>mkCard(s,true)).join("");
 }
 
-function tog(id,modal){
+function tog(id){
   const idx=sel.indexOf(id);
   if(idx===-1)sel.push(id); else sel.splice(idx,1);
-  ["","m"].forEach(sfx=>{
-    SRVS.forEach(s=>{
-      const el=document.getElementById("c"+s.id+sfx);
-      if(el) el.classList.toggle("sel",sel.includes(s.id));
-    });
+  SRVS.forEach(s=>{
+    const el=document.getElementById("c"+s.id+"m");
+    if(el) el.classList.toggle("sel",sel.includes(s.id));
   });
   updDisp();
 }
@@ -380,8 +372,8 @@ function updDisp(){
   d.innerHTML=sel.map(id=>{const s=SRVS.find(x=>x.id===id);return`<span class="srv-tag">${s?s.nm:id}</span>`;}).join("");
 }
 
-function abrirReserva(){document.getElementById("mRes").classList.add("vis");document.body.style.overflow="hidden";}
-function cerrarReserva(){document.getElementById("mRes").classList.remove("vis");document.body.style.overflow="";}
+function abrirReserva(){document.getElementById("mRes").classList.add("vis");}
+function cerrarReserva(){document.getElementById("mRes").classList.remove("vis");}
 
 let cnt=parseInt(localStorage.getItem("lqf_c")||"100");
 
@@ -443,17 +435,20 @@ function toggleMus(){
   else{stopAudio();btn.classList.remove("on");lbl.textContent="Ambiente";mOn=false;}
 }
 function startAudio(){
-  ac=new(window.AudioContext||window.webkitAudioContext)();
-  mg=ac.createGain();mg.gain.setValueAtTime(0,ac.currentTime);mg.gain.linearRampToValueAtTime(0.055,ac.currentTime+2);mg.connect(ac.destination);
-  [[55,"sine",0.4],[110,"sine",0.22],[220,"triangle",0.13],[82.4,"sine",0.28],[164.8,"triangle",0.1],[330,"sine",0.07]].forEach(([fr,tp,gv])=>{
-    const o=ac.createOscillator(),g=ac.createGain(),f=ac.createBiquadFilter();
-    f.type="lowpass";f.frequency.value=700;o.type=tp;o.frequency.setValueAtTime(fr,ac.currentTime);
-    o.frequency.linearRampToValueAtTime(fr*1.004,ac.currentTime+14);g.gain.value=gv*0.28;
-    o.connect(f);f.connect(g);g.connect(mg);o.start();oscs.push(o);
-  });
+  try{
+    ac=new(window.AudioContext||window.webkitAudioContext)();
+    if(ac.state==="suspended")ac.resume();
+    mg=ac.createGain();mg.gain.setValueAtTime(0,ac.currentTime);mg.gain.linearRampToValueAtTime(0.055,ac.currentTime+2);mg.connect(ac.destination);
+    [[55,"sine",0.4],[110,"sine",0.22],[220,"triangle",0.13],[82.4,"sine",0.28],[164.8,"triangle",0.1],[330,"sine",0.07]].forEach(([fr,tp,gv])=>{
+      const o=ac.createOscillator(),g=ac.createGain(),f=ac.createBiquadFilter();
+      f.type="lowpass";f.frequency.value=700;o.type=tp;o.frequency.setValueAtTime(fr,ac.currentTime);
+      o.frequency.linearRampToValueAtTime(fr*1.004,ac.currentTime+14);g.gain.value=gv*0.28;
+      o.connect(f);f.connect(g);g.connect(mg);o.start();oscs.push(o);
+    });
+  }catch(e){console.warn("Audio no disponible:",e);}
 }
 function stopAudio(){
-  if(mg){mg.gain.linearRampToValueAtTime(0,ac.currentTime+1.5);setTimeout(()=>{oscs.forEach(o=>{try{o.stop();}catch(e){}});oscs=[];if(ac)ac.close();},1600);}
+  if(mg&&ac){mg.gain.linearRampToValueAtTime(0,ac.currentTime+1.5);setTimeout(()=>{oscs.forEach(o=>{try{o.stop();}catch(e){}});oscs=[];try{ac.close();}catch(e){}ac=null;mg=null;},1600);}
 }
 
 function toast(msg){const t=document.getElementById("toast");t.textContent=msg;t.classList.add("show");setTimeout(()=>t.classList.remove("show"),2800);}
