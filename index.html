@@ -139,8 +139,8 @@ body::before{content:"";position:fixed;inset:0;background:radial-gradient(ellips
 .f-links{display:flex;gap:18px;justify-content:center;flex-wrap:wrap;}
 .f-lnk{font-size:11px;color:rgba(240,250,249,0.28);text-decoration:none;letter-spacing:1px;transition:color 0.2s;}
 .f-lnk:hover{color:var(--tg);}
-.f-panel{font-size:10px;color:rgba(240,250,249,0.07);text-decoration:none;letter-spacing:3px;transition:color 0.3s;margin-top:30px;display:inline-block;}
-.f-panel:hover{color:rgba(46,203,184,0.3);}
+.f-panel{font-size:10px;color:rgba(240,250,249,0.2);text-decoration:none;letter-spacing:3px;text-transform:uppercase;font-weight:700;transition:color 0.3s;margin-top:30px;display:inline-block;}
+.f-panel:hover{color:rgba(46,203,184,0.6);}
 .f-copy{margin-top:10px;font-size:9px;letter-spacing:2px;text-transform:uppercase;color:rgba(240,250,249,0.09);}
 
 .wa-fx{position:fixed;bottom:28px;right:28px;z-index:300;width:50px;height:50px;border-radius:50%;background:#25D366;display:flex;align-items:center;justify-content:center;cursor:pointer;text-decoration:none;box-shadow:0 4px 18px rgba(37,211,102,0.32);transition:all 0.3s;}
@@ -249,7 +249,7 @@ body::before{content:"";position:fixed;inset:0;background:radial-gradient(ellips
     <span style="color:rgba(255,255,255,0.07)">·</span>
     <a href="https://www.instagram.com/estetica.lqf" class="f-lnk" target="_blank">Instagram</a>
   </div>
-  <a href="panel.html" class="f-panel">· · ·</a>
+  <a href="panel.html" class="f-panel">Panel interno</a>
   <p class="f-copy">© 2025 Lo Que Faltaba · Todos los derechos reservados</p>
 </footer>
 
@@ -444,13 +444,24 @@ function startAudio(){
   try{
     ac=new(window.AudioContext||window.webkitAudioContext)();
     if(ac.state==="suspended")ac.resume();
-    mg=ac.createGain();mg.gain.setValueAtTime(0,ac.currentTime);mg.gain.linearRampToValueAtTime(0.055,ac.currentTime+2);mg.connect(ac.destination);
-    [[55,"sine",0.4],[110,"sine",0.22],[220,"triangle",0.13],[82.4,"sine",0.28],[164.8,"triangle",0.1],[330,"sine",0.07]].forEach(([fr,tp,gv])=>{
+    mg=ac.createGain();
+    mg.gain.setValueAtTime(0,ac.currentTime);
+    mg.gain.linearRampToValueAtTime(0.18,ac.currentTime+2);
+    mg.connect(ac.destination);
+    // Capas de síntesis tecno-ambient
+    [[55,"sine",0.5],[82.4,"sine",0.4],[110,"sine",0.3],[164.8,"triangle",0.2],[220,"triangle",0.15],[330,"sine",0.1]].forEach(([fr,tp,gv])=>{
       const o=ac.createOscillator(),g=ac.createGain(),f=ac.createBiquadFilter();
-      f.type="lowpass";f.frequency.value=700;o.type=tp;o.frequency.setValueAtTime(fr,ac.currentTime);
-      o.frequency.linearRampToValueAtTime(fr*1.004,ac.currentTime+14);g.gain.value=gv*0.28;
+      f.type="lowpass";f.frequency.value=900;f.Q.value=1.2;
+      o.type=tp;
+      o.frequency.setValueAtTime(fr,ac.currentTime);
+      o.frequency.linearRampToValueAtTime(fr*1.003,ac.currentTime+16);
+      g.gain.value=gv;
       o.connect(f);f.connect(g);g.connect(mg);o.start();oscs.push(o);
     });
+    // Sub-bass leve
+    const sub=ac.createOscillator(),subG=ac.createGain();
+    sub.type="sine";sub.frequency.value=40;subG.gain.value=0.6;
+    sub.connect(subG);subG.connect(mg);sub.start();oscs.push(sub);
   }catch(e){console.warn("Audio no disponible:",e);}
 }
 function stopAudio(){
