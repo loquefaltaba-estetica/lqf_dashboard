@@ -489,14 +489,32 @@ const SERVICIOS_MAP=[
   {id:"srv-VelaMax",keys:["vela max","velamax"]},{id:"srv-Lenceria",keys:["lenceria","showroom"]},
 ];
 
-async function cargarDatos(){
+function cargarDatos(){
   const btn=document.getElementById("refreshBtn");
   const bar=document.getElementById("loadingBar");
   if(btn)btn.classList.add("spinning");
   bar.classList.add("active");
+  const cbName="lqfCb"+Date.now();
+  window[cbName]=function(data){
+    delete window[cbName];
+    const s=document.getElementById("lqfScript");
+    if(s)s.remove();
+    procesarDatos(data);
+  };
+  const s=document.createElement("script");
+  s.id="lqfScript";
+  s.onerror=function(){
+    delete window[cbName];
+    document.getElementById("turnosHoyGrid").innerHTML="<div class='empty-msg' style='color:#e06c6c'>Error al cargar datos.</div>";
+    const bar=document.getElementById("loadingBar");bar.classList.remove("active");
+    const btn=document.getElementById("refreshBtn");if(btn)btn.classList.remove("spinning");
+  };
+  s.src=API_URL+"?callback="+cbName;
+  document.head.appendChild(s);
+}
+
+function procesarDatos(data){
   try{
-    const res=await fetch(API_URL);
-    const data=await res.json();
     datosGlobales=data;
     const filas=Array.isArray(data)?data.slice(1).filter(f=>f[0]):(data.turnos||[]).slice(1).filter(f=>f[0]);
     const hoy=filas.filter(f=>esHoy(f[0]));
@@ -517,8 +535,9 @@ async function cargarDatos(){
     else{const ord=[...hoy].sort((a,b)=>String(a[1]).localeCompare(String(b[1])));grid.innerHTML=ord.map(f=>"<div class='turno-row'><div class='turno-hora'>"+formatHora(f[1])+"</div><div style='flex:1'><div class='turno-nombre'>"+(f[2]||"-")+"</div><div class='turno-servicio'>"+(f[3]||"-")+(f[6]?" - "+f[6]:"")+"</div></div>"+badgeEstado(f[5])+"<div class='turno-monto'>"+formatMonto(f[7])+"</div></div>").join("");}
     SERVICIOS_MAP.forEach(function(srv){const el=document.getElementById(srv.id);if(el)el.textContent=mesReal.filter(f=>srv.keys.some(k=>norm(f[3]).includes(k))).length;});
     ["Pendiente","Confirmado","Realizado","Cancelado"].forEach(function(est){const el=document.getElementById("st"+est);if(el)el.textContent=mesTodos.filter(f=>f[5]===est).length;});
-  }catch(err){console.error("Error:",err);document.getElementById("turnosHoyGrid").innerHTML="<div class='empty-msg' style='color:#e06c6c'>Error al cargar datos.</div>";}
-  finally{if(btn)btn.classList.remove("spinning");bar.classList.remove("active");}
+  } catch(err){console.error("Error:",err);document.getElementById("turnosHoyGrid").innerHTML="<div class='empty-msg' style='color:#e06c6c'>Error al cargar datos.</div>";}
+  const bar=document.getElementById("loadingBar");bar.classList.remove("active");
+  const btn=document.getElementById("refreshBtn");if(btn)btn.classList.remove("spinning");
 }
 
 function cargarSelectorClientes(){
