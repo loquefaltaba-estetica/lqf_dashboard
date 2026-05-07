@@ -42,10 +42,7 @@
     .hamburger.open span:nth-child(2){opacity:0;transform:scaleX(0);}
     .hamburger.open span:nth-child(3){transform:translateY(-7px) rotate(-45deg);}
     /* DRAWER */
-    .overlay{
-      position:fixed;inset:0;background:rgba(0,0,0,.6);
-      z-index:1040;opacity:0;pointer-events:none;transition:opacity .35s;
-    }
+    .overlay{position:fixed;inset:0;background:rgba(0,0,0,.6);z-index:1040;opacity:0;pointer-events:none;transition:opacity .35s;}
     .overlay.on{opacity:1;pointer-events:all;}
     .drawer{
       position:fixed;top:0;right:0;height:100dvh;width:min(290px,82vw);
@@ -57,19 +54,16 @@
     }
     .drawer.open{transform:translateX(0);}
     .drawer a{
-      display:block;padding:16px 0;
-      border-bottom:1px solid rgba(20,184,184,0.07);
+      display:block;padding:16px 0;border-bottom:1px solid rgba(20,184,184,0.07);
       font-size:.78rem;font-weight:500;letter-spacing:.18em;text-transform:uppercase;
       color:var(--muted);text-decoration:none;transition:color .25s,padding-left .25s;
     }
     .drawer a:hover{color:var(--glow);padding-left:6px;}
     .drawer .sep{height:1px;background:rgba(20,184,184,0.08);margin:28px 0;flex-shrink:0;}
     .btn-acceso{
-      margin-top:auto;padding:14px 16px;
-      border:1px solid var(--gold);border-radius:6px;
+      margin-top:auto;padding:14px 16px;border:1px solid var(--gold);border-radius:6px;
       background:rgba(201,168,76,.07);color:var(--gold-l)!important;
-      text-align:center;font-size:.72rem;font-weight:600;letter-spacing:.18em;
-      transition:all .3s;
+      text-align:center;font-size:.72rem;font-weight:600;letter-spacing:.18em;transition:all .3s;
     }
     .btn-acceso:hover{background:rgba(201,168,76,.18)!important;box-shadow:0 0 20px rgba(201,168,76,.22);}
     /* HERO */
@@ -84,25 +78,19 @@
     .hero-inner{display:flex;flex-direction:column;align-items:center;max-width:680px;width:100%;}
     .hero-logo{
       width:clamp(140px,26vw,210px);height:clamp(140px,26vw,210px);
-      border-radius:50%;object-fit:cover;
-      border:2px solid rgba(29,233,233,.28);
+      border-radius:50%;object-fit:cover;border:2px solid rgba(29,233,233,.28);
       box-shadow:0 0 0 10px rgba(29,233,233,.04),0 0 56px rgba(29,233,233,.16),0 0 110px rgba(29,233,233,.06);
-      animation:float 6.5s ease-in-out infinite;
-      margin-bottom:clamp(24px,4vw,38px);
+      animation:float 6.5s ease-in-out infinite;margin-bottom:clamp(24px,4vw,38px);
     }
     @keyframes float{0%,100%{transform:translateY(0);}50%{transform:translateY(-14px);}}
     .hero-eyebrow{font-size:.62rem;letter-spacing:.42em;text-transform:uppercase;color:var(--gold);margin-bottom:14px;}
     .hero h1{
-      font-family:'Bebas Neue',sans-serif;
-      font-size:clamp(3.2rem,11vw,7.5rem);
+      font-family:'Bebas Neue',sans-serif;font-size:clamp(3.2rem,11vw,7.5rem);
       line-height:.92;letter-spacing:.05em;color:var(--white);
       text-shadow:0 0 70px rgba(29,233,233,.15);margin-bottom:18px;
     }
     .hero h1 em{font-style:normal;color:var(--glow);}
-    .hero-tag{
-      font-size:clamp(.64rem,1.8vw,.78rem);letter-spacing:.3em;text-transform:uppercase;
-      color:var(--muted);margin-bottom:clamp(28px,4.5vw,46px);
-    }
+    .hero-tag{font-size:clamp(.64rem,1.8vw,.78rem);letter-spacing:.3em;text-transform:uppercase;color:var(--muted);margin-bottom:clamp(28px,4.5vw,46px);}
     .btn-hero{
       display:inline-block;padding:clamp(13px,2vw,16px) clamp(34px,6vw,56px);
       background:linear-gradient(135deg,var(--teal),var(--teal-l));
@@ -118,10 +106,7 @@
     .section-head p{font-size:.7rem;letter-spacing:.28em;text-transform:uppercase;color:var(--muted);}
     .divider{width:48px;height:1px;margin:16px auto 0;background:linear-gradient(90deg,transparent,var(--teal-l),transparent);}
     /* GRID SERVICIOS */
-    .grid-servicios{
-      display:grid;grid-template-columns:repeat(5,1fr);
-      gap:clamp(10px,1.5vw,14px);max-width:960px;margin:0 auto;
-    }
+    .grid-servicios{display:grid;grid-template-columns:repeat(5,1fr);gap:clamp(10px,1.5vw,14px);max-width:960px;margin:0 auto;}
     @media(max-width:900px){.grid-servicios{grid-template-columns:repeat(4,1fr);}}
     @media(max-width:580px){.grid-servicios{grid-template-columns:repeat(2,1fr);}}
     .srv-card{
@@ -129,14 +114,8 @@
       border-radius:10px;padding:clamp(18px,2.5vw,28px) 12px;
       text-align:center;transition:all .3s;cursor:default;
     }
-    .srv-card:hover{
-      border-color:rgba(20,184,184,.42);background:rgba(10,90,90,.22);
-      transform:translateY(-4px);box-shadow:0 10px 28px rgba(20,184,184,.1);
-    }
-    .srv-card .ico{
-      display:block;width:clamp(28px,3.5vw,36px);height:clamp(28px,3.5vw,36px);
-      margin:0 auto 12px;
-    }
+    .srv-card:hover{border-color:rgba(20,184,184,.42);background:rgba(10,90,90,.22);transform:translateY(-4px);box-shadow:0 10px 28px rgba(20,184,184,.1);}
+    .srv-card .ico{display:block;width:clamp(28px,3.5vw,36px);height:clamp(28px,3.5vw,36px);margin:0 auto 12px;}
     .srv-card h3{font-size:clamp(.6rem,.85vw,.72rem);font-weight:600;letter-spacing:.1em;text-transform:uppercase;color:var(--muted);line-height:1.35;}
     .srv-card.gold{border-color:rgba(201,168,76,.28);background:rgba(201,168,76,.05);}
     .srv-card.gold h3{color:var(--gold-l);}
@@ -151,18 +130,14 @@
     .anamnesis-wrap p{font-size:clamp(.78rem,1.4vw,.88rem);color:var(--muted);line-height:1.8;}
     .qr-img{width:clamp(180px,40vw,240px);height:clamp(180px,40vw,240px);border-radius:16px;object-fit:contain;display:block;}
     .btn-outline{
-      display:inline-block;padding:12px 28px;
-      border:1px solid var(--teal-l);border-radius:2px;
-      color:var(--teal-l);font-size:.72rem;font-weight:600;
-      letter-spacing:.18em;text-transform:uppercase;text-decoration:none;transition:all .3s;
+      display:inline-block;padding:12px 28px;border:1px solid var(--teal-l);border-radius:2px;
+      color:var(--teal-l);font-size:.72rem;font-weight:600;letter-spacing:.18em;text-transform:uppercase;text-decoration:none;transition:all .3s;
     }
     .btn-outline:hover{background:rgba(20,184,184,.08);box-shadow:0 0 20px rgba(20,184,184,.18);}
     /* FOOTER */
     footer{
-      padding:clamp(32px,5vw,52px) clamp(20px,6vw,80px);
-      border-top:1px solid rgba(20,184,184,.08);
-      display:grid;grid-template-columns:1fr auto;align-items:center;gap:24px;
-      position:relative;z-index:1;
+      padding:clamp(32px,5vw,52px) clamp(20px,6vw,80px);border-top:1px solid rgba(20,184,184,.08);
+      display:grid;grid-template-columns:1fr auto;align-items:center;gap:24px;position:relative;z-index:1;
     }
     @media(max-width:560px){footer{grid-template-columns:1fr;text-align:center;}}
     footer p{font-size:.74rem;color:var(--muted);line-height:2;}
@@ -171,10 +146,7 @@
     .footer-logo img{width:48px;height:48px;border-radius:50%;object-fit:cover;opacity:.45;transition:opacity .3s;border:1px solid rgba(20,184,184,.2);}
     .footer-logo img:hover{opacity:.85;}
     /* FABs */
-    .fab-wrap{
-      position:fixed;bottom:clamp(20px,4vw,32px);right:clamp(18px,4vw,32px);
-      display:flex;flex-direction:column;align-items:center;gap:12px;z-index:900;
-    }
+    .fab-wrap{position:fixed;bottom:clamp(20px,4vw,32px);right:clamp(18px,4vw,32px);display:flex;flex-direction:column;align-items:center;gap:12px;z-index:900;}
     .fab-wa{
       width:54px;height:54px;border-radius:50%;background:var(--wa);
       display:flex;align-items:center;justify-content:center;
@@ -183,15 +155,14 @@
     .fab-wa:hover{transform:scale(1.08);}
     .fab-wa svg{width:26px;height:26px;fill:white;}
     .fab-music{
-      width:46px;height:46px;border-radius:50%;
-      background:rgba(6,30,30,.92);border:1.5px solid rgba(20,184,184,.28);
-      display:flex;align-items:center;justify-content:center;
+      width:46px;height:46px;border-radius:50%;background:rgba(6,30,30,.92);
+      border:1.5px solid rgba(20,184,184,.28);display:flex;align-items:center;justify-content:center;
       cursor:pointer;backdrop-filter:blur(12px);transition:all .3s;
     }
     .fab-music:hover{border-color:var(--teal-l);box-shadow:0 0 16px rgba(20,184,184,.28);}
     .fab-music.playing{border-color:var(--glow);animation:sonar 2s ease-out infinite;}
     @keyframes sonar{0%{box-shadow:0 0 0 0 rgba(29,233,233,.45);}70%{box-shadow:0 0 0 14px rgba(29,233,233,0);}100%{box-shadow:0 0 0 0 rgba(29,233,233,0);}}
-    .music-icon svg{width:18px;height:18px;fill:var(--teal-l);transition:fill .3s;}
+    .music-icon svg{width:18px;height:18px;fill:var(--teal-l);}
     .fab-music.playing .music-icon svg{fill:var(--glow);}
     .fab-music.playing .music-icon{display:none;}
     .viz{display:none;align-items:flex-end;justify-content:center;gap:2px;height:22px;width:28px;}
@@ -201,26 +172,47 @@
     .music-bar{position:fixed;bottom:0;left:0;right:0;height:2px;background:rgba(20,184,184,.08);z-index:990;display:none;}
     .music-bar.on{display:block;}
     .music-prog{height:100%;width:0%;background:linear-gradient(90deg,var(--teal),var(--glow));transition:width .5s linear;}
-    /* MODAL */
+
+    /* ══ MODAL RESERVA ══ */
     .modal-overlay{
       display:none;position:fixed;inset:0;background:rgba(3,14,14,.97);z-index:2000;
-      overflow-y:auto;padding:clamp(16px,4vw,40px);align-items:flex-start;justify-content:center;
+      overflow-y:auto;padding:clamp(16px,4vw,32px);align-items:flex-start;justify-content:center;
     }
     .modal-overlay.on{display:flex;}
     .modal-box{
       background:linear-gradient(145deg,#061e1e,#0b3535);
       border:1px solid rgba(20,184,184,.2);border-radius:14px;
-      padding:clamp(24px,5vw,48px);max-width:560px;width:100%;margin:auto;position:relative;
+      padding:clamp(20px,4vw,40px);max-width:580px;width:100%;margin:auto;position:relative;
     }
     .modal-close{
-      position:absolute;top:14px;right:18px;
-      color:var(--muted);background:none;border:none;cursor:pointer;
-      font-size:1.4rem;line-height:1;transition:color .25s;
+      position:absolute;top:14px;right:18px;color:var(--muted);
+      background:none;border:none;cursor:pointer;font-size:1.4rem;line-height:1;transition:color .25s;
     }
     .modal-close:hover{color:var(--white);}
-    .modal-title{font-family:'Playfair Display',serif;font-size:clamp(1.2rem,3vw,1.7rem);margin-bottom:6px;}
-    .modal-sub{font-size:.68rem;letter-spacing:.22em;text-transform:uppercase;color:var(--muted);margin-bottom:24px;}
-    .srv-opts{display:grid;grid-template-columns:repeat(auto-fill,minmax(min(120px,100%),1fr));gap:8px;margin-bottom:22px;}
+
+    /* Pasos del modal */
+    .paso{display:none;}
+    .paso.on{display:block;}
+
+    /* Indicador de pasos */
+    .steps-indicator{
+      display:flex;align-items:center;justify-content:center;gap:0;margin-bottom:28px;
+    }
+    .step-dot{
+      width:28px;height:28px;border-radius:50%;border:1.5px solid rgba(20,184,184,.3);
+      display:flex;align-items:center;justify-content:center;
+      font-size:.62rem;font-weight:700;color:var(--muted);transition:all .3s;
+    }
+    .step-dot.done{background:var(--teal);border-color:var(--teal);color:#fff;}
+    .step-dot.active{border-color:var(--teal-l);color:var(--teal-l);}
+    .step-line{width:32px;height:1px;background:rgba(20,184,184,.2);}
+    .step-line.done{background:var(--teal);}
+
+    .modal-title{font-family:'Playfair Display',serif;font-size:clamp(1.1rem,3vw,1.5rem);margin-bottom:4px;}
+    .modal-sub{font-size:.66rem;letter-spacing:.2em;text-transform:uppercase;color:var(--muted);margin-bottom:20px;}
+
+    /* Selección de servicio */
+    .srv-opts{display:grid;grid-template-columns:repeat(auto-fill,minmax(min(120px,100%),1fr));gap:8px;margin-bottom:20px;}
     .srv-opt{
       padding:10px 8px;border:1px solid rgba(20,184,184,.15);border-radius:6px;
       text-align:center;font-size:.66rem;font-weight:500;letter-spacing:.06em;
@@ -228,6 +220,29 @@
     }
     .srv-opt:hover{border-color:rgba(20,184,184,.4);color:var(--white);}
     .srv-opt.sel{border-color:var(--teal-l);background:rgba(20,184,184,.1);color:var(--glow);}
+
+    /* Selector fecha/hora */
+    .fecha-hora-grid{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-bottom:20px;}
+    @media(max-width:400px){.fecha-hora-grid{grid-template-columns:1fr;}}
+
+    /* Horarios disponibles */
+    .horarios-wrap{margin-bottom:20px;}
+    .horarios-label{font-size:.66rem;letter-spacing:.16em;text-transform:uppercase;color:var(--muted);margin-bottom:10px;display:block;}
+    .horarios-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(70px,1fr));gap:6px;}
+    .hora-btn{
+      padding:9px 4px;border:1px solid rgba(20,184,184,.15);border-radius:6px;
+      text-align:center;font-size:.7rem;font-weight:500;color:var(--muted);
+      cursor:pointer;transition:all .2s;user-select:none;background:none;
+    }
+    .hora-btn:hover{border-color:rgba(20,184,184,.4);color:var(--white);}
+    .hora-btn.sel{border-color:var(--teal-l);background:rgba(20,184,184,.1);color:var(--glow);}
+    .hora-btn.ocupado{
+      border-color:rgba(255,80,80,.2);background:rgba(255,80,80,.05);
+      color:rgba(255,100,100,.4);cursor:not-allowed;text-decoration:line-through;
+    }
+    .hora-btn.loading{opacity:.5;cursor:wait;}
+
+    /* Form fields */
     .fg{margin-bottom:13px;}
     .fg label{display:block;font-size:.66rem;letter-spacing:.16em;text-transform:uppercase;color:var(--muted);margin-bottom:5px;}
     .fg input,.fg select{
@@ -238,25 +253,80 @@
     }
     .fg input:focus,.fg select:focus{outline:none;border-color:var(--teal-l);}
     .fg select option{background:#0a3535;}
-    .form-row{display:grid;grid-template-columns:1fr 1fr;gap:12px;}
-    @media(max-width:440px){.form-row{grid-template-columns:1fr;}}
-    .btn-submit{
-      width:100%;padding:14px;margin-top:6px;
-      background:linear-gradient(135deg,var(--teal),var(--teal-l));
+    .fg input::placeholder{color:rgba(122,184,184,.4);}
+
+    /* Medio de pago */
+    .pago-opts{display:grid;grid-template-columns:repeat(3,1fr);gap:8px;margin-bottom:4px;}
+    @media(max-width:380px){.pago-opts{grid-template-columns:1fr;}}
+    .pago-opt{
+      padding:12px 8px;border:1px solid rgba(20,184,184,.15);border-radius:8px;
+      text-align:center;cursor:pointer;transition:all .22s;user-select:none;
+    }
+    .pago-opt svg{display:block;margin:0 auto 6px;width:20px;height:20px;stroke:var(--muted);transition:stroke .22s;}
+    .pago-opt span{font-size:.64rem;font-weight:600;letter-spacing:.08em;text-transform:uppercase;color:var(--muted);display:block;transition:color .22s;}
+    .pago-opt:hover{border-color:rgba(20,184,184,.4);}
+    .pago-opt.sel{border-color:var(--teal-l);background:rgba(20,184,184,.1);}
+    .pago-opt.sel svg{stroke:var(--glow);}
+    .pago-opt.sel span{color:var(--glow);}
+    .pago-opt.gold-opt.sel{border-color:var(--gold);background:rgba(201,168,76,.08);}
+    .pago-opt.gold-opt.sel svg{stroke:var(--gold-l);}
+    .pago-opt.gold-opt.sel span{color:var(--gold-l);}
+
+    /* Campo GC */
+    .gc-field{
+      overflow:hidden;max-height:0;transition:max-height .35s ease,opacity .3s;opacity:0;
+    }
+    .gc-field.on{max-height:80px;opacity:1;}
+
+    /* Botones navegación */
+    .btn-nav{display:flex;gap:10px;margin-top:20px;}
+    .btn-back{
+      padding:13px 20px;background:transparent;border:1px solid rgba(20,184,184,.25);
+      color:var(--muted);font-size:.72rem;font-weight:600;letter-spacing:.15em;text-transform:uppercase;
+      border-radius:4px;cursor:pointer;transition:all .25s;
+    }
+    .btn-back:hover{border-color:var(--teal-l);color:var(--white);}
+    .btn-next{
+      flex:1;padding:13px;background:linear-gradient(135deg,var(--teal),var(--teal-l));
       color:#fff;font-size:.74rem;font-weight:700;letter-spacing:.2em;text-transform:uppercase;
       border:none;border-radius:4px;cursor:pointer;transition:all .3s;
+      display:flex;align-items:center;justify-content:center;gap:8px;
     }
-    .btn-submit:hover{box-shadow:0 6px 26px rgba(20,184,184,.38);}
-    .confirm{display:none;text-align:center;padding:10px 0;}
-    .confirm.on{display:block;}
-    .cod{font-family:'Bebas Neue',sans-serif;font-size:2.8rem;color:var(--glow);letter-spacing:.15em;text-shadow:0 0 24px rgba(29,233,233,.38);margin:14px 0;}
-    .confirm p{font-size:.8rem;color:var(--muted);line-height:1.7;margin-bottom:18px;}
+    .btn-next:hover{box-shadow:0 6px 26px rgba(20,184,184,.38);}
+    .btn-next:disabled{opacity:.5;cursor:not-allowed;}
+
+    /* Spinner */
+    .spinner{
+      width:16px;height:16px;border:2px solid rgba(255,255,255,.3);
+      border-top-color:#fff;border-radius:50%;animation:spin .7s linear infinite;display:none;
+    }
+    @keyframes spin{to{transform:rotate(360deg);}}
+    .btn-next.loading .spinner{display:block;}
+    .btn-next.loading .btn-txt{display:none;}
+
+    /* Error */
+    .modal-error{
+      margin-top:12px;padding:10px 14px;background:rgba(220,50,50,.1);
+      border:1px solid rgba(220,50,50,.3);border-radius:6px;
+      font-size:.74rem;color:#f87171;display:none;
+    }
+    .modal-error.on{display:block;}
+
+    /* Confirmación */
+    .confirm-wrap{text-align:center;padding:8px 0;}
+    .confirm-check svg{margin:0 auto 12px;display:block;}
+    .cod{
+      font-family:'Bebas Neue',sans-serif;font-size:3rem;color:var(--glow);
+      letter-spacing:.15em;text-shadow:0 0 24px rgba(29,233,233,.38);margin:10px 0 6px;
+    }
+    .confirm-resumen{font-size:.78rem;color:var(--muted);line-height:1.7;margin-bottom:22px;}
     .btn-wa-c{
       display:inline-flex;align-items:center;gap:8px;padding:13px 26px;
       background:var(--wa);color:#fff;font-size:.76rem;font-weight:700;
       letter-spacing:.1em;text-decoration:none;border-radius:4px;transition:filter .3s;
     }
     .btn-wa-c:hover{filter:brightness(1.1);}
+
     .fi{opacity:0;transform:translateY(20px);transition:opacity .6s ease,transform .6s ease;}
     .fi.vis{opacity:1;transform:translateY(0);}
   </style>
@@ -301,110 +371,46 @@
     <div class="divider"></div>
   </div>
   <div class="grid-servicios">
-
-    <!-- Plasma: jeringa -->
     <div class="srv-card fi">
-      <svg class="ico" viewBox="0 0 24 24" fill="none" stroke="var(--teal-l)" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round">
-        <path d="M18 2l4 4-4 4"/><path d="M14.5 5.5L18 2"/><path d="M2 22l4.5-4.5"/><path d="M6 16L16 6"/><line x1="9" y1="19" x2="19" y2="9"/><path d="M10 14l-2 2"/>
-      </svg>
+      <svg class="ico" viewBox="0 0 24 24" fill="none" stroke="var(--teal-l)" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"><path d="M18 2l4 4-4 4"/><path d="M14.5 5.5L18 2"/><path d="M2 22l4.5-4.5"/><path d="M6 16L16 6"/><line x1="9" y1="19" x2="19" y2="9"/><path d="M10 14l-2 2"/></svg>
       <h3>Plasma</h3>
     </div>
-
-    <!-- Depilación: hoja de afeitar -->
     <div class="srv-card fi">
-      <svg class="ico" viewBox="0 0 24 24" fill="none" stroke="var(--teal-l)" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round">
-        <path d="M20 4L4 20"/><path d="M4 4l6 6"/><rect x="7" y="7" width="10" height="10" rx="2" transform="rotate(45 12 12)"/>
-      </svg>
+      <svg class="ico" viewBox="0 0 24 24" fill="none" stroke="var(--teal-l)" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"><path d="M20 4L4 20"/><path d="M4 4l6 6"/><rect x="7" y="7" width="10" height="10" rx="2" transform="rotate(45 12 12)"/></svg>
       <h3>Depilación</h3>
     </div>
-
-    <!-- Masajes: manos -->
     <div class="srv-card fi">
-      <svg class="ico" viewBox="0 0 24 24" fill="none" stroke="var(--teal-l)" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round">
-        <path d="M18 11V7a2 2 0 0 0-2-2v0a2 2 0 0 0-2 2v4"/><path d="M14 9V6a2 2 0 0 0-2-2v0a2 2 0 0 0-2 2v3"/><path d="M10 9.5V5a2 2 0 0 0-2-2v0a2 2 0 0 0-2 2v9"/><path d="M18 11a2 2 0 1 1 4 0v3a8 8 0 0 1-8 8h-2a8 8 0 0 1-8-8 2 2 0 1 1 4 0"/>
-      </svg>
+      <svg class="ico" viewBox="0 0 24 24" fill="none" stroke="var(--teal-l)" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"><path d="M18 11V7a2 2 0 0 0-2-2v0a2 2 0 0 0-2 2v4"/><path d="M14 9V6a2 2 0 0 0-2-2v0a2 2 0 0 0-2 2v3"/><path d="M10 9.5V5a2 2 0 0 0-2-2v0a2 2 0 0 0-2 2v9"/><path d="M18 11a2 2 0 1 1 4 0v3a8 8 0 0 1-8 8h-2a8 8 0 0 1-8-8 2 2 0 1 1 4 0"/></svg>
       <h3>Masajes</h3>
     </div>
-
-    <!-- Criolipólisis: copo de nieve -->
     <div class="srv-card fi">
-      <svg class="ico" viewBox="0 0 24 24" fill="none" stroke="var(--teal-l)" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round">
-        <line x1="12" y1="2" x2="12" y2="22"/>
-        <line x1="2" y1="12" x2="22" y2="12"/>
-        <polyline points="9 5 12 2 15 5"/>
-        <polyline points="9 19 12 22 15 19"/>
-        <polyline points="5 9 2 12 5 15"/>
-        <polyline points="19 9 22 12 19 15"/>
-        <line x1="5.64" y1="5.64" x2="18.36" y2="18.36"/>
-        <line x1="18.36" y1="5.64" x2="5.64" y2="18.36"/>
-        <polyline points="8.1 3.54 5.64 5.64 7.74 8.1"/>
-        <polyline points="3.54 15.9 5.64 18.36 8.1 16.26"/>
-        <polyline points="15.9 20.46 18.36 18.36 16.26 15.9"/>
-        <polyline points="20.46 8.1 18.36 5.64 15.9 7.74"/>
-      </svg>
+      <svg class="ico" viewBox="0 0 24 24" fill="none" stroke="var(--teal-l)" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"><line x1="12" y1="2" x2="12" y2="22"/><line x1="2" y1="12" x2="22" y2="12"/><polyline points="9 5 12 2 15 5"/><polyline points="9 19 12 22 15 19"/><polyline points="5 9 2 12 5 15"/><polyline points="19 9 22 12 19 15"/><line x1="5.64" y1="5.64" x2="18.36" y2="18.36"/><line x1="18.36" y1="5.64" x2="5.64" y2="18.36"/><polyline points="8.1 3.54 5.64 5.64 7.74 8.1"/><polyline points="3.54 15.9 5.64 18.36 8.1 16.26"/><polyline points="15.9 20.46 18.36 18.36 16.26 15.9"/><polyline points="20.46 8.1 18.36 5.64 15.9 7.74"/></svg>
       <h3>Criolipólisis</h3>
     </div>
-
-    <!-- Body Up: rayo -->
     <div class="srv-card fi">
-      <svg class="ico" viewBox="0 0 24 24" fill="none" stroke="var(--teal-l)" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round">
-        <polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"/>
-      </svg>
+      <svg class="ico" viewBox="0 0 24 24" fill="none" stroke="var(--teal-l)" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"><polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"/></svg>
       <h3>Body Up</h3>
     </div>
-
-    <!-- Presoterapia: ondas de presión -->
     <div class="srv-card fi">
-      <svg class="ico" viewBox="0 0 24 24" fill="none" stroke="var(--teal-l)" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round">
-        <path d="M12 12m-2 0a2 2 0 1 0 4 0a2 2 0 1 0-4 0"/>
-        <path d="M7.5 7.5a7 7 0 0 0 0 9"/>
-        <path d="M16.5 7.5a7 7 0 0 1 0 9"/>
-        <path d="M4 4a13 13 0 0 0 0 16"/>
-        <path d="M20 4a13 13 0 0 1 0 16"/>
-      </svg>
+      <svg class="ico" viewBox="0 0 24 24" fill="none" stroke="var(--teal-l)" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"><path d="M12 12m-2 0a2 2 0 1 0 4 0a2 2 0 1 0-4 0"/><path d="M7.5 7.5a7 7 0 0 0 0 9"/><path d="M16.5 7.5a7 7 0 0 1 0 9"/><path d="M4 4a13 13 0 0 0 0 16"/><path d="M20 4a13 13 0 0 1 0 16"/></svg>
       <h3>Presoterapia</h3>
     </div>
-
-    <!-- HIFU: ondas ultrasónicas -->
     <div class="srv-card fi">
-      <svg class="ico" viewBox="0 0 24 24" fill="none" stroke="var(--teal-l)" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round">
-        <path d="M9 9l-3-3m0 0L3 3m3 3l3 3M3 9l3-3"/><rect x="9" y="9" width="13" height="13" rx="2"/><path d="M13 13h5M13 17h3"/>
-      </svg>
+      <svg class="ico" viewBox="0 0 24 24" fill="none" stroke="var(--teal-l)" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"><path d="M9 9l-3-3m0 0L3 3m3 3l3 3M3 9l3-3"/><rect x="9" y="9" width="13" height="13" rx="2"/><path d="M13 13h5M13 17h3"/></svg>
       <h3>HIFU 12D</h3>
     </div>
-
-    <!-- Bronceado: sol -->
     <div class="srv-card fi">
-      <svg class="ico" viewBox="0 0 24 24" fill="none" stroke="var(--teal-l)" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round">
-        <circle cx="12" cy="12" r="5"/>
-        <line x1="12" y1="1" x2="12" y2="3"/>
-        <line x1="12" y1="21" x2="12" y2="23"/>
-        <line x1="4.22" y1="4.22" x2="5.64" y2="5.64"/>
-        <line x1="18.36" y1="18.36" x2="19.78" y2="19.78"/>
-        <line x1="1" y1="12" x2="3" y2="12"/>
-        <line x1="21" y1="12" x2="23" y2="12"/>
-        <line x1="4.22" y1="19.78" x2="5.64" y2="18.36"/>
-        <line x1="18.36" y1="5.64" x2="19.78" y2="4.22"/>
-      </svg>
+      <svg class="ico" viewBox="0 0 24 24" fill="none" stroke="var(--teal-l)" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="5"/><line x1="12" y1="1" x2="12" y2="3"/><line x1="12" y1="21" x2="12" y2="23"/><line x1="4.22" y1="4.22" x2="5.64" y2="5.64"/><line x1="18.36" y1="18.36" x2="19.78" y2="19.78"/><line x1="1" y1="12" x2="3" y2="12"/><line x1="21" y1="12" x2="23" y2="12"/><line x1="4.22" y1="19.78" x2="5.64" y2="18.36"/><line x1="18.36" y1="5.64" x2="19.78" y2="4.22"/></svg>
       <h3>Bronceado sin Sol</h3>
     </div>
-
-    <!-- Vela Max: llama -->
     <div class="srv-card fi">
-      <svg class="ico" viewBox="0 0 24 24" fill="none" stroke="var(--teal-l)" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round">
-        <path d="M8.5 14.5A2.5 2.5 0 0 0 11 12c0-1.38-.5-2-1-3-1.072-2.143-.224-4.054 2-6 .5 2.5 2 4.9 4 6.5 2 1.6 3 3.5 3 5.5a7 7 0 1 1-14 0c0-1.153.433-2.294 1-3a2.5 2.5 0 0 0 2.5 2.5z"/>
-      </svg>
+      <svg class="ico" viewBox="0 0 24 24" fill="none" stroke="var(--teal-l)" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"><path d="M8.5 14.5A2.5 2.5 0 0 0 11 12c0-1.38-.5-2-1-3-1.072-2.143-.224-4.054 2-6 .5 2.5 2 4.9 4 6.5 2 1.6 3 3.5 3 5.5a7 7 0 1 1-14 0c0-1.153.433-2.294 1-3a2.5 2.5 0 0 0 2.5 2.5z"/></svg>
       <h3>Vela Max</h3>
     </div>
-
-    <!-- Lencería: percha -->
     <div class="srv-card gold fi">
-      <svg class="ico" viewBox="0 0 24 24" fill="none" stroke="var(--gold)" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round">
-        <path d="M20.38 3.46L16 2a4 4 0 0 1-8 0L3.62 3.46a2 2 0 0 0-1.34 2.23l.58 3.57a1 1 0 0 0 .99.84H5v10a2 2 0 0 0 2 2h10a2 2 0 0 0 2-2V10h1.15a1 1 0 0 0 .99-.84l.58-3.57a2 2 0 0 0-1.34-2.23z"/>
-      </svg>
+      <svg class="ico" viewBox="0 0 24 24" fill="none" stroke="var(--gold)" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"><path d="M20.38 3.46L16 2a4 4 0 0 1-8 0L3.62 3.46a2 2 0 0 0-1.34 2.23l.58 3.57a1 1 0 0 0 .99.84H5v10a2 2 0 0 0 2 2h10a2 2 0 0 0 2-2V10h1.15a1 1 0 0 0 .99-.84l.58-3.57a2 2 0 0 0-1.34-2.23z"/></svg>
       <h3>Showroom Lencería</h3>
     </div>
-
   </div>
 </section>
 
@@ -436,7 +442,7 @@
 <div class="fab-wrap">
   <button class="fab-music" id="fabMusic" aria-label="Música">
     <span class="music-icon">
-      <svg viewBox="0 0 24 24"><path d="M9 18V5l12-2v13"/><circle cx="6" cy="18" r="3"/><circle cx="18" cy="16" r="3"/></svg>
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"><path d="M9 18V5l12-2v13"/><circle cx="6" cy="18" r="3"/><circle cx="18" cy="16" r="3"/></svg>
     </span>
     <div class="viz">
       <div class="viz-bar" style="--d:.38s"></div>
@@ -451,13 +457,25 @@
   </a>
 </div>
 
+<!-- ══ MODAL RESERVA — 3 pasos ══ -->
 <div class="modal-overlay" id="modalOverlay">
   <div class="modal-box">
     <button class="modal-close" id="modalClose">×</button>
-    <div id="formStep">
-      <h2 class="modal-title">Reservar Turno</h2>
-      <p class="modal-sub">Elegí tu servicio y horario</p>
-      <div class="srv-opts">
+
+    <!-- Indicador pasos -->
+    <div class="steps-indicator" id="stepsIndicator">
+      <div class="step-dot active" id="dot1">1</div>
+      <div class="step-line" id="line12"></div>
+      <div class="step-dot" id="dot2">2</div>
+      <div class="step-line" id="line23"></div>
+      <div class="step-dot" id="dot3">3</div>
+    </div>
+
+    <!-- PASO 1: Servicio -->
+    <div class="paso on" id="paso1">
+      <h2 class="modal-title">¿Qué servicio querés?</h2>
+      <p class="modal-sub">Seleccioná uno para continuar</p>
+      <div class="srv-opts" id="srvOpts">
         <div class="srv-opt" data-s="Plasma">Plasma</div>
         <div class="srv-opt" data-s="Depilación">Depilación</div>
         <div class="srv-opt" data-s="Masajes">Masajes</div>
@@ -469,32 +487,96 @@
         <div class="srv-opt" data-s="Vela Max">Vela Max</div>
         <div class="srv-opt" data-s="Showroom Lencería">Lencería</div>
       </div>
-      <div class="fg"><label>Nombre</label><input id="iNom" type="text" placeholder="Tu nombre completo"/></div>
-      <div class="fg"><label>WhatsApp</label><input id="iTel" type="tel" placeholder="11 xxxx-xxxx"/></div>
-      <div class="form-row">
-        <div class="fg"><label>Fecha</label><input id="iFec" type="date"/></div>
-        <div class="fg"><label>Horario</label>
-          <select id="iHor">
-            <option value="">Elegí</option>
-            <option>09:00</option><option>09:30</option><option>10:00</option><option>10:30</option>
-            <option>11:00</option><option>11:30</option><option>14:00</option><option>14:30</option>
-            <option>15:00</option><option>15:30</option><option>16:00</option><option>16:30</option>
-            <option>17:00</option><option>17:30</option>
-          </select>
+      <div class="btn-nav">
+        <button class="btn-next" id="btnPaso1">
+          <span class="btn-txt">Elegir fecha y hora</span>
+          <div class="spinner"></div>
+        </button>
+      </div>
+      <div class="modal-error" id="err1"></div>
+    </div>
+
+    <!-- PASO 2: Fecha y hora -->
+    <div class="paso" id="paso2">
+      <h2 class="modal-title">¿Cuándo querés venir?</h2>
+      <p class="modal-sub">Seleccioná fecha y horario disponible</p>
+      <div class="fg">
+        <label>Fecha</label>
+        <input type="date" id="iFec"/>
+      </div>
+      <div class="horarios-wrap">
+        <span class="horarios-label">Horarios disponibles</span>
+        <div class="horarios-grid" id="horariosGrid">
+          <!-- se genera dinámicamente -->
         </div>
       </div>
-      <button class="btn-submit" id="btnConfirmar">Confirmar Reserva</button>
+      <div class="btn-nav">
+        <button class="btn-back" id="btnBack1">Atrás</button>
+        <button class="btn-next" id="btnPaso2">
+          <span class="btn-txt">Mis datos</span>
+          <div class="spinner"></div>
+        </button>
+      </div>
+      <div class="modal-error" id="err2"></div>
     </div>
-    <div class="confirm" id="confirmStep">
-      <svg width="38" height="38" viewBox="0 0 24 24" fill="none" stroke="var(--teal-l)" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" style="margin:0 auto 8px;display:block"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"/><polyline points="22 4 12 14.01 9 11.01"/></svg>
-      <p class="modal-sub" style="margin-top:10px">Turno reservado</p>
-      <div class="cod" id="codLQF">LQF-0000</div>
-      <p id="resumen">Te confirmamos a la brevedad.</p>
-      <a href="#" class="btn-wa-c" id="btnWA">
-        <svg width="17" height="17" viewBox="0 0 24 24" fill="white"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/></svg>
-        Confirmar por WhatsApp
-      </a>
+
+    <!-- PASO 3: Datos + pago -->
+    <div class="paso" id="paso3">
+      <h2 class="modal-title">Tus datos</h2>
+      <p class="modal-sub">Casi listo</p>
+      <div class="fg"><label>Nombre completo</label><input id="iNom" type="text" placeholder="Tu nombre"/></div>
+      <div class="fg"><label>WhatsApp</label><input id="iTel" type="tel" placeholder="11 xxxx-xxxx"/></div>
+      <div class="fg"><label>Email (opcional)</label><input id="iMail" type="email" placeholder="tu@email.com"/></div>
+      <div class="fg">
+        <label>Medio de pago</label>
+        <div class="pago-opts">
+          <div class="pago-opt" data-p="Efectivo">
+            <svg viewBox="0 0 24 24" fill="none" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="6" width="20" height="12" rx="2"/><circle cx="12" cy="12" r="3"/><path d="M6 12h.01M18 12h.01"/></svg>
+            <span>Efectivo</span>
+          </div>
+          <div class="pago-opt" data-p="Transferencia">
+            <svg viewBox="0 0 24 24" fill="none" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"><path d="M8 6h13M8 12h13M8 18h13M3 6h.01M3 12h.01M3 18h.01"/></svg>
+            <span>Transferencia</span>
+          </div>
+          <div class="pago-opt gold-opt" data-p="Gift Card">
+            <svg viewBox="0 0 24 24" fill="none" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"><path d="M20 12v10H4V12"/><path d="M22 7H2v5h20V7z"/><path d="M12 22V7"/><path d="M12 7H7.5a2.5 2.5 0 0 1 0-5C11 2 12 7 12 7z"/><path d="M12 7h4.5a2.5 2.5 0 0 0 0-5C13 2 12 7 12 7z"/></svg>
+            <span>Gift Card</span>
+          </div>
+        </div>
+        <!-- Campo código GC -->
+        <div class="gc-field" id="gcField">
+          <div class="fg" style="margin-top:10px;margin-bottom:0">
+            <label>Código Gift Card</label>
+            <input id="iGC" type="text" placeholder="GC-001" style="text-transform:uppercase"/>
+          </div>
+        </div>
+      </div>
+      <div class="btn-nav">
+        <button class="btn-back" id="btnBack2">Atrás</button>
+        <button class="btn-next" id="btnEnviar">
+          <span class="btn-txt">Confirmar Reserva</span>
+          <div class="spinner"></div>
+        </button>
+      </div>
+      <div class="modal-error" id="err3"></div>
     </div>
+
+    <!-- PASO 4: Confirmación -->
+    <div class="paso" id="paso4">
+      <div class="confirm-wrap">
+        <div class="confirm-check">
+          <svg width="48" height="48" viewBox="0 0 24 24" fill="none" stroke="var(--teal-l)" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"/><polyline points="22 4 12 14.01 9 11.01"/></svg>
+        </div>
+        <p class="modal-sub" style="margin-top:8px">Reserva recibida</p>
+        <div class="cod" id="codLQF">LQF-0000</div>
+        <p class="confirm-resumen" id="resumen"></p>
+        <a href="#" class="btn-wa-c" id="btnWA">
+          <svg width="17" height="17" viewBox="0 0 24 24" fill="white"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/></svg>
+          Escribinos por WhatsApp
+        </a>
+      </div>
+    </div>
+
   </div>
 </div>
 
@@ -503,125 +585,303 @@
 </audio>
 
 <script>
-// DRAWER
+const AS_URL = "https://script.google.com/macros/s/AKfycbxUvLBus6VkSJlE7eymJ1eX1jMeO27Q2jOCwGW76FjH5Ta503BVrZ1Ym5u-ntGi1urq/exec";
+
+const HORARIOS = [
+  "09:00","09:30","10:00","10:30","11:00","11:30",
+  "14:00","14:30","15:00","15:30","16:00","16:30","17:00","17:30"
+];
+
+// Estado reserva
+let state = { servicio:'', fecha:'', hora:'', medioPago:'' };
+let turnosOcupados = []; // [{fecha, hora}]
+
+// ── DRAWER ──
 const ham = document.getElementById('ham');
 const drawer = document.getElementById('drawer');
 const overlay = document.getElementById('overlay');
 function toggleDrawer(){
   const open = drawer.classList.toggle('open');
-  ham.classList.toggle('open', open);
-  overlay.classList.toggle('on', open);
-  document.body.style.overflow = open ? 'hidden' : '';
+  ham.classList.toggle('open',open);
+  overlay.classList.toggle('on',open);
+  document.body.style.overflow = open?'hidden':'';
 }
 function closeDrawer(){
   drawer.classList.remove('open');
   ham.classList.remove('open');
   overlay.classList.remove('on');
-  document.body.style.overflow = '';
+  document.body.style.overflow='';
 }
-ham.addEventListener('click', toggleDrawer);
-overlay.addEventListener('click', closeDrawer);
-document.querySelectorAll('.drw-link').forEach(a => a.addEventListener('click', closeDrawer));
+ham.addEventListener('click',toggleDrawer);
+overlay.addEventListener('click',closeDrawer);
+document.querySelectorAll('.drw-link').forEach(a=>a.addEventListener('click',closeDrawer));
 
-// MÚSICA
-const audio = document.getElementById('bgAudio');
-const fabMusic = document.getElementById('fabMusic');
-const musicBar = document.getElementById('musicBar');
-const musicProg = document.getElementById('musicProg');
-const heroLogo = document.querySelector('.hero-logo');
-let playing = false, fadeTimer = null;
-audio.volume = 0.55;
-fabMusic.addEventListener('click', () => {
-  if (!playing) {
-    audio.play().then(() => {
-      playing = true;
-      fabMusic.classList.add('playing');
-      musicBar.classList.add('on');
-      heroLogo.style.animationDuration = '2.2s';
+// ── MÚSICA ──
+const audio=document.getElementById('bgAudio');
+const fabMusic=document.getElementById('fabMusic');
+const musicBar=document.getElementById('musicBar');
+const musicProg=document.getElementById('musicProg');
+const heroLogo=document.querySelector('.hero-logo');
+let playing=false,fadeTimer=null;
+audio.volume=0.55;
+fabMusic.addEventListener('click',()=>{
+  if(!playing){
+    audio.play().then(()=>{
+      playing=true;fabMusic.classList.add('playing');
+      musicBar.classList.add('on');heroLogo.style.animationDuration='2.2s';
     }).catch(()=>{});
   } else {
-    if (fadeTimer) clearInterval(fadeTimer);
-    let v = audio.volume;
-    fadeTimer = setInterval(() => {
-      v = Math.max(0, +(v - 0.05).toFixed(3));
-      audio.volume = v;
-      if (v <= 0) {
-        clearInterval(fadeTimer);
-        audio.pause();
-        audio.currentTime = 0;
-        audio.volume = 0.55;
-        playing = false;
-        fabMusic.classList.remove('playing');
-        musicBar.classList.remove('on');
-        musicProg.style.width = '0%';
-        heroLogo.style.animationDuration = '6.5s';
+    if(fadeTimer)clearInterval(fadeTimer);
+    let v=audio.volume;
+    fadeTimer=setInterval(()=>{
+      v=Math.max(0,+(v-0.05).toFixed(3));audio.volume=v;
+      if(v<=0){
+        clearInterval(fadeTimer);audio.pause();audio.currentTime=0;audio.volume=0.55;
+        playing=false;fabMusic.classList.remove('playing');
+        musicBar.classList.remove('on');musicProg.style.width='0%';
+        heroLogo.style.animationDuration='6.5s';
       }
-    }, 60);
+    },60);
   }
 });
-audio.addEventListener('timeupdate', () => {
-  if (audio.duration)
-    musicProg.style.width = (audio.currentTime / audio.duration * 100) + '%';
+audio.addEventListener('timeupdate',()=>{
+  if(audio.duration) musicProg.style.width=(audio.currentTime/audio.duration*100)+'%';
 });
 
-// MODAL
-const modalOverlay = document.getElementById('modalOverlay');
-const formStep = document.getElementById('formStep');
-const confirmStep = document.getElementById('confirmStep');
+// ── MODAL ──
+const modalOverlay=document.getElementById('modalOverlay');
+
 function openModal(){
   modalOverlay.classList.add('on');
-  document.body.style.overflow = 'hidden';
-  formStep.style.display = 'block';
-  confirmStep.classList.remove('on');
+  document.body.style.overflow='hidden';
+  resetModal();
+  cargarTurnos();
 }
 function closeModal(){
   modalOverlay.classList.remove('on');
-  document.body.style.overflow = '';
+  document.body.style.overflow='';
 }
-document.getElementById('btnReservar').addEventListener('click', openModal);
-document.getElementById('modalClose').addEventListener('click', closeModal);
-modalOverlay.addEventListener('click', e => { if (e.target === modalOverlay) closeModal(); });
 
-let srvSel = '';
-document.querySelectorAll('.srv-opt').forEach(o => {
-  o.addEventListener('click', () => {
-    document.querySelectorAll('.srv-opt').forEach(x => x.classList.remove('sel'));
+document.getElementById('btnReservar').addEventListener('click',openModal);
+document.getElementById('modalClose').addEventListener('click',closeModal);
+modalOverlay.addEventListener('click',e=>{if(e.target===modalOverlay)closeModal();});
+
+function resetModal(){
+  state={servicio:'',fecha:'',hora:'',medioPago:''};
+  irAPaso(1);
+  document.querySelectorAll('.srv-opt').forEach(o=>o.classList.remove('sel'));
+  document.querySelectorAll('.pago-opt').forEach(o=>o.classList.remove('sel'));
+  document.getElementById('iNom').value='';
+  document.getElementById('iTel').value='';
+  document.getElementById('iMail').value='';
+  document.getElementById('iGC').value='';
+  document.getElementById('gcField').classList.remove('on');
+  ['err1','err2','err3'].forEach(id=>{ const el=document.getElementById(id); el.classList.remove('on'); el.textContent=''; });
+}
+
+function irAPaso(n){
+  [1,2,3,4].forEach(i=>{
+    document.getElementById('paso'+i).classList.toggle('on',i===n);
+  });
+  // Indicadores
+  const dots=[1,2,3];
+  dots.forEach(i=>{
+    const dot=document.getElementById('dot'+i);
+    dot.classList.remove('active','done');
+    if(i<n) dot.classList.add('done');
+    else if(i===n) dot.classList.add('active');
+  });
+  [12,23].forEach(pair=>{
+    const line=document.getElementById('line'+pair);
+    const [a]=String(pair).split('');
+    line.classList.toggle('done',n>parseInt(a));
+  });
+  // Ocultar indicador en paso 4
+  document.getElementById('stepsIndicator').style.display = n===4?'none':'flex';
+}
+
+function mostrarError(id,msg){
+  const el=document.getElementById(id);
+  el.textContent=msg;
+  el.classList.add('on');
+}
+
+// ── CARGAR TURNOS OCUPADOS ──
+function cargarTurnos(){
+  const url = AS_URL + '?callback=cb_' + Date.now();
+  // Usar doGet existente vía JSONP
+  const script = document.createElement('script');
+  const cbName = 'cb_lqf_' + Date.now();
+
+  window[cbName] = function(data){
+    turnosOcupados = [];
+    if(data && data.turnos){
+      data.turnos.forEach((row,i)=>{
+        if(i===0) return; // header
+        const estadoCol = row[6]; // col 7 = índice 6
+        if(estadoCol==='Confirmado'||estadoCol==='Pendiente'){
+          // Fecha col 0, Hora col 1
+          const rawFecha = row[0];
+          const rawHora = row[1];
+          let fechaStr = '';
+          if(rawFecha instanceof Date || (typeof rawFecha==='string' && rawFecha)){
+            const d = new Date(rawFecha);
+            if(!isNaN(d)) fechaStr = d.toISOString().split('T')[0];
+          } else if(typeof rawFecha==='string'){
+            fechaStr = rawFecha.substring(0,10);
+          }
+          let horaStr = '';
+          if(typeof rawHora==='string') horaStr = rawHora.substring(0,5);
+          else if(rawHora instanceof Date) horaStr = rawHora.toTimeString().substring(0,5);
+          if(fechaStr && horaStr) turnosOcupados.push({fecha:fechaStr, hora:horaStr});
+        }
+      });
+    }
+    document.body.removeChild(script);
+    delete window[cbName];
+    renderHorarios();
+  };
+
+  script.src = AS_URL + '?callback=' + cbName;
+  document.body.appendChild(script);
+}
+
+// ── PASO 1: Servicio ──
+document.querySelectorAll('.srv-opt').forEach(o=>{
+  o.addEventListener('click',()=>{
+    document.querySelectorAll('.srv-opt').forEach(x=>x.classList.remove('sel'));
     o.classList.add('sel');
-    srvSel = o.dataset.s;
+    state.servicio=o.dataset.s;
   });
 });
 
-document.getElementById('btnConfirmar').addEventListener('click', () => {
-  const nom = document.getElementById('iNom').value.trim();
-  const tel = document.getElementById('iTel').value.trim();
-  const fec = document.getElementById('iFec').value;
-  const hor = document.getElementById('iHor').value;
-  if (!nom || !tel || !fec || !hor || !srvSel){
-    alert('Completá todos los campos y elegí un servicio');
-    return;
+document.getElementById('btnPaso1').addEventListener('click',()=>{
+  if(!state.servicio){ mostrarError('err1','Seleccioná un servicio para continuar.'); return; }
+  document.getElementById('err1').classList.remove('on');
+  irAPaso(2);
+  if(state.fecha) renderHorarios();
+});
+
+// ── PASO 2: Fecha/hora ──
+const iFec=document.getElementById('iFec');
+iFec.min=new Date().toISOString().split('T')[0];
+
+iFec.addEventListener('change',()=>{
+  state.fecha=iFec.value;
+  state.hora='';
+  renderHorarios();
+});
+
+function esOcupado(hora){
+  return turnosOcupados.some(t=>t.fecha===state.fecha && t.hora===hora);
+}
+
+function renderHorarios(){
+  const grid=document.getElementById('horariosGrid');
+  grid.innerHTML='';
+  HORARIOS.forEach(h=>{
+    const btn=document.createElement('button');
+    btn.className='hora-btn' + (esOcupado(h)?' ocupado':'') + (state.hora===h?' sel':'');
+    btn.textContent=h;
+    btn.disabled=esOcupado(h);
+    if(!esOcupado(h)){
+      btn.addEventListener('click',()=>{
+        document.querySelectorAll('.hora-btn').forEach(b=>b.classList.remove('sel'));
+        btn.classList.add('sel');
+        state.hora=h;
+      });
+    }
+    grid.appendChild(btn);
+  });
+}
+
+document.getElementById('btnBack1').addEventListener('click',()=>irAPaso(1));
+
+document.getElementById('btnPaso2').addEventListener('click',()=>{
+  if(!state.fecha){ mostrarError('err2','Seleccioná una fecha.'); return; }
+  if(!state.hora){ mostrarError('err2','Seleccioná un horario disponible.'); return; }
+  document.getElementById('err2').classList.remove('on');
+  irAPaso(3);
+});
+
+// ── PASO 3: Datos + pago ──
+document.querySelectorAll('.pago-opt').forEach(o=>{
+  o.addEventListener('click',()=>{
+    document.querySelectorAll('.pago-opt').forEach(x=>x.classList.remove('sel'));
+    o.classList.add('sel');
+    state.medioPago=o.dataset.p;
+    document.getElementById('gcField').classList.toggle('on', state.medioPago==='Gift Card');
+  });
+});
+
+document.getElementById('btnBack2').addEventListener('click',()=>irAPaso(2));
+
+document.getElementById('btnEnviar').addEventListener('click',async ()=>{
+  const nom=document.getElementById('iNom').value.trim();
+  const tel=document.getElementById('iTel').value.trim();
+  const mail=document.getElementById('iMail').value.trim();
+  const gc=document.getElementById('iGC').value.trim().toUpperCase();
+
+  if(!nom||!tel){ mostrarError('err3','Ingresá tu nombre y WhatsApp.'); return; }
+  if(!state.medioPago){ mostrarError('err3','Seleccioná un medio de pago.'); return; }
+  if(state.medioPago==='Gift Card'&&!gc){ mostrarError('err3','Ingresá el código de Gift Card.'); return; }
+
+  document.getElementById('err3').classList.remove('on');
+
+  // Loading
+  const btn=document.getElementById('btnEnviar');
+  btn.classList.add('loading');
+  btn.disabled=true;
+
+  try {
+    const res = await fetch(AS_URL, {
+      method:'POST',
+      body: JSON.stringify({
+        fecha: state.fecha,
+        hora: state.hora,
+        cliente: nom,
+        servicio: state.servicio,
+        telefono: tel,
+        email: mail,
+        medioPago: state.medioPago,
+        codigoGC: gc || ''
+      })
+    });
+    const data = await res.json();
+
+    if(data.ok){
+      // Confirmación
+      const fechaFmt = new Date(state.fecha+'T12:00:00').toLocaleDateString('es-AR',
+        {weekday:'long',day:'numeric',month:'long'});
+      document.getElementById('codLQF').textContent = data.codigo;
+      document.getElementById('resumen').textContent =
+        `${nom} · ${state.servicio} · ${fechaFmt} a las ${state.hora} · ${state.medioPago}`;
+
+      const msgWA = encodeURIComponent(
+        `Hola! Hice una reserva en Lo Que Faltaba\nNombre: ${nom}\nServicio: ${state.servicio}\nFecha: ${fechaFmt} a las ${state.hora}\nPago: ${state.medioPago}\nCódigo: ${data.codigo}`
+      );
+      document.getElementById('btnWA').href = `https://wa.me/5491165232458?text=${msgWA}`;
+
+      // Agregar al listado local para bloquear inmediatamente
+      turnosOcupados.push({fecha:state.fecha, hora:state.hora});
+
+      irAPaso(4);
+    } else {
+      mostrarError('err3', data.error || 'Ocurrió un error. Intentá de nuevo.');
+    }
+  } catch(e){
+    mostrarError('err3','Error de conexión. Verificá tu internet.');
+  } finally {
+    btn.classList.remove('loading');
+    btn.disabled=false;
   }
-  const cod = 'LQF-' + Math.floor(1000 + Math.random() * 9000);
-  const fecha = new Date(fec + 'T12:00:00').toLocaleDateString('es-AR',
-    { weekday:'long', day:'numeric', month:'long' });
-  document.getElementById('codLQF').textContent = cod;
-  document.getElementById('resumen').textContent =
-    `${nom} · ${srvSel} · ${fecha} a las ${hor}. Código: ${cod}`;
-  const msg = encodeURIComponent(
-    `Hola! Reservé un turno\nNombre: ${nom}\nServicio: ${srvSel}\nFecha: ${fecha} - ${hor}\nCódigo: ${cod}`);
-  document.getElementById('btnWA').href = `https://wa.me/5491165232458?text=${msg}`;
-  formStep.style.display = 'none';
-  confirmStep.classList.add('on');
 });
 
-// FADE IN
-const io = new IntersectionObserver(entries => {
-  entries.forEach(e => {
-    if (e.isIntersecting){ e.target.classList.add('vis'); io.unobserve(e.target); }
-  });
-}, { threshold: 0.1 });
-document.querySelectorAll('.fi').forEach(el => io.observe(el));
-
-document.getElementById('iFec').min = new Date().toISOString().split('T')[0];
+// ── FADE IN ──
+const io=new IntersectionObserver(entries=>{
+  entries.forEach(e=>{if(e.isIntersecting){e.target.classList.add('vis');io.unobserve(e.target);}});
+},{threshold:0.1});
+document.querySelectorAll('.fi').forEach(el=>io.observe(el));
 </script>
 </body>
 </html>
