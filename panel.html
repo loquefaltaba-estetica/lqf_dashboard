@@ -641,7 +641,8 @@ nav{
               <div style="font-size:.9rem;font-weight:700;" id="fichaNombre">-</div>
             </div>
           </div>
-          <div class="dato-row"><span class="dato-lbl">Nacimiento</span><span class="dato-val" id="fichaNac">-</span></div>
+          <div class="alerta-med" id="fichaAlerta" style="display:none"></div>
+        <div class="dato-row"><span class="dato-lbl">Nacimiento</span><span class="dato-val" id="fichaNac">-</span></div>
           <div class="dato-row"><span class="dato-lbl">DNI</span><span class="dato-val" id="fichaDni">-</span></div>
           <div class="dato-row"><span class="dato-lbl">Teléfono</span><span class="dato-val" id="fichaTel">-</span></div>
           <div class="dato-row"><span class="dato-lbl">Email</span><span class="dato-val" style="font-size:.72rem;" id="fichaEmail">-</span></div>
@@ -1133,6 +1134,119 @@ function mostrarFicha(){
   document.getElementById("fichaGrid").style.display="grid";
 }
 
+
+
+// ── MODAL RESERVA ──
+function openModal(){
+  document.getElementById("modalOverlay").classList.add("on");
+  document.body.style.overflow="hidden";
+  resetModal();
+}
+function closeModal(){
+  document.getElementById("modalOverlay").classList.remove("on");
+  document.body.style.overflow="";
+}
+function resetModal(){
+  reservaState={servicio:"",fecha:"",hora:"",medioPago:""};
+  irPaso(1);
+  document.querySelectorAll(".srv-opt").forEach(o=>o.classList.remove("sel"));
+  document.querySelectorAll(".pago-opt").forEach(o=>o.classList.remove("sel"));
+  ["iNom","iTel","iMail","iGC"].forEach(id=>{const el=document.getElementById(id);if(el)el.value="";});
+  document.getElementById("gcCampo").classList.remove("on");
+  ["err1","err2","err3"].forEach(id=>{const el=document.getElementById(id);if(el){el.classList.remove("on");el.textContent="";}});
+}
+function irPaso(n){
+  [1,2,3,4].forEach(i=>document.getElementById("p"+i).classList.toggle("on",i===n));
+  [1,2,3].forEach(i=>{
+    const d=document.getElementById("sd"+i);
+    d.classList.remove("active","done");
+    if(i<n)d.classList.add("done");
+    else if(i===n)d.classList.add("active");
+  });
+  [[1,2],[2,3]].forEach(([a,b])=>{
+    document.getElementById("sl"+a+""+b).classList.toggle("done",n>a);
+  });
+  document.getElementById("stepsBar").style.display=n===4?"none":"flex";
+}
+function showErr(id,msg){const el=document.getElementById(id);el.textContent=msg;el.classList.add("on");}
+
+document.getElementById("modalClose").addEventListener("click",closeModal);
+document.getElementById("modalOverlay").addEventListener("click",e=>{if(e.target===e.currentTarget)closeModal();});
+
+document.querySelectorAll(".srv-opt").forEach(o=>o.addEventListener("click",()=>{
+  document.querySelectorAll(".srv-opt").forEach(x=>x.classList.remove("sel"));
+  o.classList.add("sel");reservaState.servicio=o.dataset.s;
+}));
+
+document.getElementById("btnP1").addEventListener("click",()=>{
+  if(!reservaState.servicio){showErr("err1","Seleccioná un servicio.");return;}
+  document.getElementById("err1").classList.remove("on");
+  irPaso(2);
+  if(reservaState.fecha)renderHorarios();
+});
+document.getElementById("backP1").addEventListener("click",()=>irPaso(1));
+
+document.getElementById("iFec").addEventListener("change",e=>{
+  reservaState.fecha=e.target.value;reservaState.hora="";renderHorarios();
+});
+document.getElementById("iFec").min=new Date().toISOString().split("T")[0];
+
+function esOcupado(h){return turnosOcupados.some(t=>t.fecha===reservaState.fecha&&t.hora===h);}
+function renderHorarios(){
+  const g=document.getElementById("horariosGrid");g.innerHTML="";
+  HORARIOS.forEach(h=>{
+    const btn=document.createElement("button");
+    btn.className="hora-btn"+(esOcupado(h)?" ocupado":"")+(reservaState.hora===h?" sel":"");
+    btn.textContent=h;btn.disabled=esOcupado(h);
+    if(!esOcupado(h))btn.addEventListener("click",()=>{
+      document.querySelectorAll(".hora-btn").forEach(b=>b.classList.remove("sel"));
+      btn.classList.add("sel");reservaState.hora=h;
+    });
+    g.appendChild(btn);
+  });
+}
+
+document.getElementById("btnP2").addEventListener("click",()=>{
+  if(!reservaState.fecha){showErr("err2","Seleccioná una fecha.");return;}
+  if(!reservaState.hora){showErr("err2","Seleccioná un horario.");return;}
+  document.getElementById("err2").classList.remove("on");irPaso(3);
+});
+document.getElementById("backP2").addEventListener("click",()=>irPaso(2));
+
+document.querySelectorAll(".pago-opt").forEach(o=>o.addEventListener("click",()=>{
+  document.querySelectorAll(".pago-opt").forEach(x=>x.classList.remove("sel"));
+  o.classList.add("sel");reservaState.medioPago=o.dataset.p;
+  document.getElementById("gcCampo").classList.toggle("on",reservaState.medioPago==="Gift Card");
+}));
+
+document.getElementById("btnEnviar").addEventListener("click",async()=>{
+  const nom=document.getElementById("iNom").value.trim();
+  const tel=document.getElementById("iTel").value.trim();
+  const mail=document.getElementById("iMail").value.trim();
+  const gc=document.getElementById("iGC").value.trim().toUpperCase();
+  if(!nom||!tel){showErr("err3","Ingresá nombre y WhatsApp.");return;}
+  if(!reservaState.medioPago){showErr("err3","Seleccioná un medio de pago.");return;}
+  if(reservaState.medioPago==="Gift Card"&&!gc){showErr("err3","Ingresá el código de Gift Card.");return;}
+  document.getElementById("err3").classList.remove("on");
+  const btn=document.getElementById("btnEnviar");btn.classList.add("loading");btn.disabled=true;
+  try{
+    const res=await fetch(AS_URL,{
+      method:"POST",
+      body:JSON.stringify({fecha:reservaState.fecha,hora:reservaState.hora,cliente:nom,servicio:reservaState.servicio,telefono:tel,email:mail,medioPago:reservaState.medioPago,codigoGC:gc||""})
+    });
+    const data=await res.json();
+    if(data.ok){
+      const fecha=new Date(reservaState.fecha+"T12:00:00").toLocaleDateString("es-AR",{weekday:"long",day:"numeric",month:"long"});
+      document.getElementById("codLQF").textContent=data.codigo;
+      document.getElementById("confirmRes").textContent=nom+" · "+reservaState.servicio+" · "+fecha+" a las "+reservaState.hora+" · "+reservaState.medioPago;
+      const msg=encodeURIComponent("Hola! Reservé un turno\nNombre: "+nom+"\nServicio: "+reservaState.servicio+"\nFecha: "+fecha+" - "+reservaState.hora+"\nPago: "+reservaState.medioPago+"\nCódigo: "+data.codigo);
+      document.getElementById("btnWA").href="https://wa.me/5491165232458?text="+msg;
+      turnosOcupados.push({fecha:reservaState.fecha,hora:reservaState.hora});
+      irPaso(4);
+    } else {showErr("err3",data.error||"Error. Intentá de nuevo.");}
+  }catch(e){showErr("err3","Error de conexión.");}
+  btn.classList.remove("loading");btn.disabled=false;
+});
 
 setInterval(cargarDatos,5*60*1000);
 </script>
