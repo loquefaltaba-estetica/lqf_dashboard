@@ -522,14 +522,14 @@ nav{
           <div class="kpi-hint" id="kpiHoySub">cargando...</div>
         </div>
         <div class="kpi green">
-          <div class="kpi-lbl">Ingresos del Mes</div>
-          <div class="kpi-val" id="kpiIngresos">-</div>
-          <div class="kpi-hint" id="kpiIngresosSub">cargando...</div>
+          <div class="kpi-lbl">Efectivo del Mes</div>
+          <div class="kpi-val" id="kpiEfectivo">-</div>
+          <div class="kpi-hint" id="kpiEfectivoSub">realizados</div>
         </div>
         <div class="kpi orange">
-          <div class="kpi-lbl">Cobrado este mes</div>
-          <div class="kpi-val" id="kpiCobrado">-</div>
-          <div class="kpi-hint" id="kpiCobradoSub">cargando...</div>
+          <div class="kpi-lbl">Transferencia Mes</div>
+          <div class="kpi-val" id="kpiTransf">-</div>
+          <div class="kpi-hint" id="kpiTransfSub">realizados</div>
         </div>
         <div class="kpi gold">
           <div class="kpi-lbl">Gift Cards Activas</div>
@@ -542,9 +542,9 @@ nav{
           <div class="kpi-hint">en base</div>
         </div>
         <div class="kpi green">
-          <div class="kpi-lbl">Turnos Hoy</div>
-          <div class="kpi-val" id="kpiTurnosHoy">-</div>
-          <div class="kpi-hint" id="kpiTurnosHoySub">detalle</div>
+          <div class="kpi-lbl">Realizados Mes</div>
+          <div class="kpi-val" id="kpiRealizados">-</div>
+          <div class="kpi-hint" id="kpiRealizadosSub">este mes</div>
         </div>
       </div>
 
@@ -584,7 +584,7 @@ nav{
           <div class="grafico-title">Actividad &amp; Estados</div>
           <div class="charts-row">
             <div>
-              <div class="chart-sub">Turnos realizados</div>
+              <div class="chart-sub">Ingresos por servicio</div>
               <canvas id="canvasLinea" height="110" style="width:100%;display:block;"></canvas>
             </div>
             <div class="donut-wrap">
@@ -1326,65 +1326,55 @@ document.getElementById("btnEnviar").addEventListener("click",async()=>{
 
 // ── GRÁFICO CRECIMIENTO ──
 function renderGrafico(fs){
-  // ── GRÁFICO LÍNEAS: turnos realizados últimos 6 meses ──
+  // ── GRÁFICO BARRAS: ingresos por servicio (top 6) ──
   var canvas=document.getElementById("canvasLinea");
   if(canvas){
     canvas.width=canvas.offsetWidth||260;
     var ctx=canvas.getContext("2d");
     var W=canvas.width,H=canvas.height;
     ctx.clearRect(0,0,W,H);
-    var meses=["Ene","Feb","Mar","Abr","May","Jun","Jul","Ago","Sep","Oct","Nov","Dic"];
-    var ahora=new Date();
-    var vals=[];
-    for(var i=5;i>=0;i--){
-      var d=new Date(ahora.getFullYear(),ahora.getMonth()-i,1);
-      var mes=d.getMonth(),anio=d.getFullYear();
-      var c=0;
-      for(var j=0;j<fs.length;j++){
-        try{var fd=new Date(fs[j][0]);if(fd.getMonth()===mes&&fd.getFullYear()===anio&&fs[j][6]==="Realizado")c++;}catch(e){}
+
+    // Agrupar ingresos por servicio
+    var srvMap={};
+    fs.forEach(function(f){
+      if(f[6]==="Realizado"&&f[3]&&Number(f[8])){
+        var s=String(f[3]).trim();
+        srvMap[s]=(srvMap[s]||0)+Number(f[8]);
       }
-      vals.push({lbl:meses[mes],v:c});
-    }
-    var maxV=Math.max.apply(null,vals.map(function(x){return x.v;}))||1;
-    var pad={t:10,r:10,b:28,l:24};
-    var gW=W-pad.l-pad.r,gH=H-pad.t-pad.b;
-    // Grilla
-    ctx.strokeStyle="rgba(20,184,184,0.08)";ctx.lineWidth=1;
-    for(var g=0;g<=4;g++){
-      var gy=pad.t+gH*(1-g/4);
-      ctx.beginPath();ctx.moveTo(pad.l,gy);ctx.lineTo(pad.l+gW,gy);ctx.stroke();
-    }
-    // Línea
-    var pts=vals.map(function(item,ix){
-      return{x:pad.l+ix*(gW/(vals.length-1)),y:pad.t+gH*(1-item.v/maxV)};
     });
-    // Área relleno
-    var grad=ctx.createLinearGradient(0,pad.t,0,pad.t+gH);
-    grad.addColorStop(0,"rgba(20,184,184,0.22)");
-    grad.addColorStop(1,"rgba(20,184,184,0)");
-    ctx.beginPath();
-    ctx.moveTo(pts[0].x,pad.t+gH);
-    pts.forEach(function(p){ctx.lineTo(p.x,p.y);});
-    ctx.lineTo(pts[pts.length-1].x,pad.t+gH);
-    ctx.closePath();ctx.fillStyle=grad;ctx.fill();
-    // Línea principal
-    ctx.beginPath();
-    pts.forEach(function(p,i){i===0?ctx.moveTo(p.x,p.y):ctx.lineTo(p.x,p.y);});
-    ctx.strokeStyle="#1de9e9";ctx.lineWidth=2;ctx.stroke();
-    // Puntos
-    pts.forEach(function(p,i){
-      ctx.beginPath();ctx.arc(p.x,p.y,3,0,Math.PI*2);
-      ctx.fillStyle="#1de9e9";ctx.fill();
+    var srvArr=Object.keys(srvMap).map(function(k){return{lbl:k,v:srvMap[k]};});
+    srvArr.sort(function(a,b){return b.v-a.v;});
+    srvArr=srvArr.slice(0,6);
+
+    if(srvArr.length===0){
+      ctx.fillStyle="#7ab8b8";ctx.font="11px Montserrat,sans-serif";
+      ctx.textAlign="center";ctx.textBaseline="middle";
+      ctx.fillText("Sin datos aún",W/2,H/2);
+      return;
+    }
+
+    var maxV=srvArr[0].v||1;
+    var barH=Math.floor((H-20)/srvArr.length)-6;
+    var padL=90,padR=50;
+    var colors=["#1de9e9","#14b8b8","#0a9090","#5ecc8a","#c9a84c","#e8a44a"];
+
+    srvArr.forEach(function(item,i){
+      var y=10+i*(barH+6);
+      var barW=Math.max(4,Math.round((item.v/maxV)*(W-padL-padR)));
+      // Barra
+      ctx.fillStyle=colors[i%colors.length];
+      ctx.beginPath();
+      ctx.roundRect?ctx.roundRect(padL,y,barW,barH,3):ctx.rect(padL,y,barW,barH);
+      ctx.fill();
+      // Label servicio
+      ctx.fillStyle="#7ab8b8";ctx.font="9px Montserrat,sans-serif";
+      ctx.textAlign="right";ctx.textBaseline="middle";
+      var lbl=item.lbl.length>12?item.lbl.slice(0,11)+"…":item.lbl;
+      ctx.fillText(lbl,padL-6,y+barH/2);
       // Valor
-      if(vals[i].v>0){
-        ctx.fillStyle="#f0fafa";ctx.font="bold 9px Montserrat,sans-serif";
-        ctx.textAlign="center";ctx.fillText(vals[i].v,p.x,p.y-6);
-      }
-    });
-    // Labels eje X
-    ctx.fillStyle="#7ab8b8";ctx.font="9px Montserrat,sans-serif";ctx.textAlign="center";
-    vals.forEach(function(item,ix){
-      ctx.fillText(item.lbl,pad.l+ix*(gW/(vals.length-1)),H-6);
+      ctx.fillStyle="#f0fafa";ctx.font="bold 9px Montserrat,sans-serif";
+      ctx.textAlign="left";
+      ctx.fillText("$"+(item.v/1000).toFixed(0)+"k",padL+barW+5,y+barH/2);
     });
   }
 
