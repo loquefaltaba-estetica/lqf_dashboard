@@ -1044,17 +1044,18 @@ function renderGCIndexCanvas(para, servicio, codigo, validaHasta){
     // Coordenadas calibradas sobre imagen 1536x1024
     // PARA: cy=406, SERVICIO: cy=527, CÓDIGO: cy=649, VÁLIDA: cy=789
     // x texto: 788px (20px padding dentro del rect oscuro)
+    // Coordenadas calibradas sobre imagen 1536x1024
     var campos=[
-      {y:406,val:para},
-      {y:527,val:servicio},
-      {y:649,val:codigo},
-      {y:789,val:validaHasta}
+      {cy:340, cx:1250, val:para},
+      {cy:458, cx:1220, val:servicio},
+      {cy:580, cx:1230, val:codigo},
+      {cy:710, cx:1250, val:validaHasta}
     ];
     ctx.font="bold 34px Montserrat,sans-serif";
     ctx.fillStyle="#1de9e9";
-    ctx.textAlign="left";
+    ctx.textAlign="center";
     ctx.textBaseline="middle";
-    campos.forEach(function(c){ctx.fillText(c.val||"",788,c.y);});
+    campos.forEach(function(c){ctx.fillText(c.val||"",c.cx,c.cy);});
   }
   if(GC_BG_IDX.complete&&GC_BG_IDX.naturalWidth){draw();}
   else{GC_BG_IDX.onload=draw;}
