@@ -1036,22 +1036,25 @@ function renderGCIndexCanvas(para, servicio, codigo, validaHasta){
   var preview=document.getElementById("gcIdxPreview");
   var canvas =document.getElementById("gcIdxCanvas");
   preview.classList.add("on");
-  var W=1334,H=888;
+  var W=1536,H=1024;
   canvas.width=W;canvas.height=H;
   var ctx=canvas.getContext("2d");
   function draw(){
     ctx.drawImage(GC_BG_IDX,0,0,W,H);
+    // Coordenadas calibradas sobre imagen 1536x1024
+    // PARA: cy=406, SERVICIO: cy=527, CÓDIGO: cy=649, VÁLIDA: cy=789
+    // x texto: 788px (20px padding dentro del rect oscuro)
     var campos=[
-      {y:308,val:para},
-      {y:403,val:servicio},
-      {y:498,val:codigo},
-      {y:593,val:validaHasta}
+      {y:406,val:para},
+      {y:527,val:servicio},
+      {y:649,val:codigo},
+      {y:789,val:validaHasta}
     ];
-    ctx.font="600 30px Montserrat,sans-serif";
+    ctx.font="bold 34px Montserrat,sans-serif";
     ctx.fillStyle="#1de9e9";
     ctx.textAlign="left";
     ctx.textBaseline="middle";
-    campos.forEach(function(c){ctx.fillText(c.val||"",830,c.y);});
+    campos.forEach(function(c){ctx.fillText(c.val||"",788,c.y);});
   }
   if(GC_BG_IDX.complete&&GC_BG_IDX.naturalWidth){draw();}
   else{GC_BG_IDX.onload=draw;}
