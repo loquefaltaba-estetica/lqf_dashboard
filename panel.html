@@ -1130,21 +1130,22 @@ function renderAgenda(){
       }
 
       var obsActual=String(f[16]||"").trim().replace(/"/g,"&quot;");
-      var cardHTML = '<div class="turno-card" id="'+idTurno+'">';
-      cardHTML += '<div class="t-hora">'+horaStr+'</div>';
-      cardHTML += '<div class="t-info">';
-      cardHTML += '<div class="t-nombre">'+nombre+'</div>';
-      cardHTML += '<div class="t-servicio">'+servicio+'</div>';
-      if(f[7]) cardHTML += '<div class="t-medio">'+f[7]+'</div>';
-      cardHTML += '</div>';
-      cardHTML += badge(estado);
-      cardHTML += '<div class="t-monto">'+monto+'</div>';
-      if(acciones) cardHTML += '<div class="turno-actions" style="width:100%">'+acciones+'</div>';
-      cardHTML += '<div class="obs-row">';
-      cardHTML += '<input class="obs-input" id="obs_'+fi+'" type="text" placeholder="Observaciones..." value="'+obsActual+'"/>';
-      cardHTML += '<button class="btn-obs" onclick="guardarObs(\''+turnoId+'\','+fi+')">💾 Guardar</button>';
-      cardHTML += '</div></div>';
-      return cardHTML;
+      var c="";
+      c+='<div class="turno-card" id="'+idTurno+'">';
+      c+='<div class="t-hora">'+horaStr+"</div>";
+      c+='<div class="t-info">';
+      c+='<div class="t-nombre">'+nombre+"</div>";
+      c+='<div class="t-servicio">'+servicio+"</div>";
+      if(f[7])c+='<div class="t-medio">'+f[7]+"</div>";
+      c+="</div>";
+      c+=badge(estado);
+      c+='<div class="t-monto">'+monto+"</div>";
+      if(acciones)c+='<div class="turno-actions" style="width:100%">'+acciones+"</div>";
+      c+='<div class="obs-row">';
+      c+='<input class="obs-input" id="obs_'+fi+'" type="text" placeholder="Observaciones..." value="'+obsActual+'"/>';
+      c+='<button class="btn-obs" onclick="guardarObs(\''+turnoId+'\','+fi+')">&#x1F4BE; Guardar</button>';
+      c+="</div></div>";
+      return c;
     }).join("");
     return sep+cards;
   }).join("");
