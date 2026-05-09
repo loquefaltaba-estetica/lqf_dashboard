@@ -1084,17 +1084,19 @@ function renderAgenda(){
 
       // Botones según estado
       let acciones="";
-      if(estado==="Pendiente"||estado==="Confirmado"){
-        if(estado==="Pendiente"){
-          acciones+=`<a href="https://wa.me/${telWA}?text=${msgConf}" target="_blank" class="btn-turno btn-confirmar" onclick="cambiarEstado(${fi},'Confirmado')">
-            <svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round"><polyline points="20 6 9 17 4 12"/></svg>Confirmar</a>`;
-        }
-        acciones+=`<a href="https://wa.me/${telWA}?text=${msgCanc}" target="_blank" class="btn-turno btn-cancelar" onclick="cambiarEstado(${fi},'Cancelado')">
-          <svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>Cancelar</a>`;
+      if(estado==="Pendiente"){
+        acciones+=`<button class="btn-turno btn-confirmar" onclick="accionTurno(${fi},'Confirmado','https://wa.me/${telWA}?text=${msgConf}')">
+          <svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round"><polyline points="20 6 9 17 4 12"/></svg>Confirmar y WA</button>`;
+        acciones+=`<button class="btn-turno btn-cancelar" onclick="accionTurno(${fi},'Cancelado','https://wa.me/${telWA}?text=${msgCanc}')">
+          <svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>Cancelar</button>`;
+      }
+      if(estado==="Confirmado"){
+        acciones+=`<button class="btn-turno btn-cancelar" onclick="accionTurno(${fi},'Cancelado','https://wa.me/${telWA}?text=${msgCanc}')">
+          <svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>Cancelar</button>`;
       }
       if((estado==="Confirmado"||estado==="Realizado")&&!pagado){
         acciones+=`<span style="display:flex;align-items:center;gap:4px;">
-          <input class="monto-input" id="monto_${fi}" type="number" placeholder="$monto" value="${f[8]||""}"/>
+          <input class="monto-input" id="monto_${fi}" type="number" placeholder="monto" value="${f[8]||""}"/>
           <button class="btn-turno btn-pagar" onclick="registrarPago(${fi})">
             <svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round"><line x1="12" y1="1" x2="12" y2="23"/><path d="M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6"/></svg>Cobrado</button>
         </span>`;
@@ -1595,16 +1597,20 @@ function toggleMusicPanel(){
 
 
 // ── ACCIONES TURNO DESDE AGENDA ──
-async function cambiarEstado(filaIdx, nuevoEstado){
-  // filaIdx es el índice en filas() = índice en datos.turnos desde fila 2
+async function accionTurno(filaIdx, nuevoEstado, urlWA){
   try {
     var res = await fetch(AS_URL, {
       method: "POST",
       body: JSON.stringify({accion:"cambiarEstado", filaIdx: filaIdx, estado: nuevoEstado})
     });
     var data = await res.json();
-    if(data.ok){ cargarDatos(); }
-    else { alert(data.error||"Error al cambiar estado."); }
+    if(data.ok){
+      // Abrir WhatsApp después de actualizar el Sheet
+      window.open(urlWA, "_blank");
+      cargarDatos();
+    } else {
+      alert(data.error||"Error al cambiar estado.");
+    }
   } catch(e){ alert("Error de conexión."); }
 }
 
