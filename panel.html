@@ -1081,57 +1081,42 @@ function renderAgenda(){
     if(rows.length===0)return"";
     const hoyMark=isoDate(new Date())===isoDate(dia)?" · HOY":"";
     const sep=`<div class="t-fecha-sep">${dias[dia.getDay()]} ${dia.getDate()} de ${meses[dia.getMonth()]}${hoyMark}</div>`;
-    const cards=rows.map((f,ri)=>{
-      // Índice real en filas() para identificar el turno
-      const fi=fs.indexOf(f);
-      const codLQF=String(f[17]||"").trim(); // col R = código LQF único
-      const idTurno="t_"+fi;
-      const tel=String(f[4]||"").replace(/\D/g,"");
-      const telWA=tel.startsWith("54")?tel:"54"+tel;
-      const fechaStr=fmtFecha(f[0]);
-      const horaStr=fmtHora(f[1]);
-      const nombre=f[2]||"-";
-      const servicio=f[3]||"-";
-      const estado=f[6]||"";
-      const pagado=String(f[9]||"").toUpperCase()==="SI";
-      const monto=f[8]?fmtMonto(f[8]):"";
+    const cards=rows.map(function(f,ri){
+      var fi=fs.indexOf(f);
+      var codLQF=String(f[17]||"").trim();
+      var turnoId=codLQF||("IDX_"+fi);
+      var idTurno="t_"+fi;
+      var tel=String(f[4]||"").replace(/\D/g,"");
+      var telWA=tel.startsWith("54")?tel:"54"+tel;
+      var fechaStr=fmtFecha(f[0]);
+      var horaStr=fmtHora(f[1]);
+      var nombre=f[2]||"-";
+      var servicio=f[3]||"-";
+      var estado=f[6]||"";
+      var pagado=String(f[9]||"").toUpperCase()==="SI";
+      var monto=f[8]?fmtMonto(f[8]):"";
 
-      // Mensajes WA
-      const msgConf=encodeURIComponent("Hola "+nombre+" ✨\n\nTu turno quedó confirmado 🌿\n\n🧖 Servicio: "+servicio+"\n📅 Fecha: "+fechaStr+"\n🕐 Hora: "+horaStr+"\n\nTe esperamos en Lo Que Faltaba 💛");
-      const msgCanc=encodeURIComponent("Hola "+nombre+", tu turno de "+servicio+" del "+fechaStr+" a las "+horaStr+" fue cancelado.\n\nSi querés reprogramar, escribinos 🙏");
+      var msgConf=encodeURIComponent("Hola "+nombre+" ✨\n\nTu turno quedó confirmado 🌿\n\n🧖 Servicio: "+servicio+"\n📅 Fecha: "+fechaStr+"\n🕐 Hora: "+horaStr+"\n\nTe esperamos en Lo Que Faltaba 💛");
+      var msgCanc=encodeURIComponent("Hola "+nombre+", tu turno de "+servicio+" del "+fechaStr+" a las "+horaStr+" fue cancelado.\n\nSi querés reprogramar, escribinos 🙏");
 
-      // Botones según estado
-      let acciones="";
+      var acciones="";
       if(estado==="Pendiente"){
-        acciones+=`<button class="btn-turno btn-confirmar" onclick="accionTurno('${codLQF}','Confirmado','https://wa.me/${telWA}?text=${msgConf}')">
-          <svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round"><polyline points="20 6 9 17 4 12"/></svg>Confirmar</button>`;
-        acciones+=`<button class="btn-turno btn-cancelar" onclick="accionTurno(${fi},'Cancelado','https://wa.me/${telWA}?text=${msgCanc}')">
-          <svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>Cancelar</button>`;
+        acciones+='<button class="btn-turno btn-confirmar" onclick="accionTurno(\''+turnoId+'\',\'Confirmado\',\'https://wa.me/'+telWA+'?text='+msgConf+'\')"><svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round"><polyline points="20 6 9 17 4 12"/></svg>Confirmar</button>';
+        acciones+='<button class="btn-turno btn-cancelar" onclick="accionTurno(\''+turnoId+'\',\'Cancelado\',\'https://wa.me/'+telWA+'?text='+msgCanc+'\')"><svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>Cancelar</button>';
       }
       if(estado==="Confirmado"){
-        acciones+=`<button class="btn-turno btn-cancelar" onclick="accionTurno('${codLQF}','Cancelado','https://wa.me/${telWA}?text=${msgCanc}')">
-          <svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>Cancelar</button>`;
+        acciones+='<button class="btn-turno btn-cancelar" onclick="accionTurno(\''+turnoId+'\',\'Cancelado\',\'https://wa.me/'+telWA+'?text='+msgCanc+'\')"><svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>Cancelar</button>';
       }
       if((estado==="Confirmado"||estado==="Realizado")&&!pagado){
-        acciones+=`<span style="display:flex;align-items:center;gap:4px;">
-          <input class="monto-input" id="monto_${fi}" type="number" placeholder="monto" value="${f[8]||""}"/>
-          <button class="btn-turno btn-pagar" onclick="registrarPago('${codLQF}',${fi})">
-            <svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round"><line x1="12" y1="1" x2="12" y2="23"/><path d="M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6"/></svg>Cobrado</button>
-        </span>`;
+        acciones+='<span style="display:flex;align-items:center;gap:4px;"><input class="monto-input" id="monto_'+fi+'" type="number" placeholder="monto" value="'+(f[8]||"")+'"/><button class="btn-turno btn-pagar" onclick="registrarPago(\''+turnoId+'\','+fi+')"><svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round"><line x1="12" y1="1" x2="12" y2="23"/><path d="M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6"/></svg>Cobrado</button></span>';
       }
       if(pagado){
-        acciones+=`<span class="btn-turno btn-pagar pagado">✓ Cobrado ${monto}</span>`;
+        acciones+='<span class="btn-turno btn-pagar pagado">✓ Cobrado '+monto+'</span>';
       }
-      // Devolución: solo si está Cancelado y tiene pago registrado
       if(estado==="Cancelado"&&pagado){
-        acciones+=`<button class="btn-turno btn-devolucion" onclick="registrarDevolucion('${codLQF}')">
-          <svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round"><polyline points="9 14 4 9 9 4"/><path d="M20 20v-7a4 4 0 0 0-4-4H4"/></svg>
-          Devolución</button>`;
+        acciones+='<button class="btn-turno btn-devolucion" onclick="registrarDevolucion(\''+turnoId+'\')"><svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round"><polyline points="9 14 4 9 9 4"/><path d="M20 20v-7a4 4 0 0 0-4-4H4"/></svg>Devolución</button>';
       }
 
-      var obsActual=String(f[16]||"").trim().replace(/"/g,"&quot;");
-      var obsId="obs_"+fi;
-      var onclickObs="guardarObs('"+turnoId+"',"+fi+")";
       var c='<div class="turno-card" id="'+idTurno+'">';
       c+='<div class="t-hora">'+horaStr+"</div>";
       c+='<div class="t-info">';
@@ -1142,10 +1127,7 @@ function renderAgenda(){
       c+=badge(estado);
       c+='<div class="t-monto">'+monto+"</div>";
       if(acciones)c+='<div class="turno-actions" style="width:100%">'+acciones+"</div>";
-      c+='<div class="obs-row">';
-      c+='<input class="obs-input" id="'+obsId+'" type="text" placeholder="Observaciones..." value="'+obsActual+'"/>';
-      c+='<button class="btn-obs" onclick="'+onclickObs+'">&#128190; Guardar</button>';
-      c+="</div></div>";
+      c+="</div>";
       return c;
     }).join("");
     return sep+cards;
