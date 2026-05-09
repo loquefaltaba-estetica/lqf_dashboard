@@ -1067,7 +1067,7 @@ function renderAgenda(){
     const cards=rows.map((f,ri)=>{
       // Índice real en filas() para identificar el turno
       const fi=fs.indexOf(f);
-      const codLQF=String(f[10]||"").trim(); // col K = código LQF único
+      const codLQF=String(f[17]||"").trim(); // col R = código LQF único
       const idTurno="t_"+fi;
       const tel=String(f[4]||"").replace(/\D/g,"");
       const telWA=tel.startsWith("54")?tel:"54"+tel;
