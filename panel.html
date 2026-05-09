@@ -1067,6 +1067,7 @@ function renderAgenda(){
     const cards=rows.map((f,ri)=>{
       // Índice real en filas() para identificar el turno
       const fi=fs.indexOf(f);
+      const codLQF=String(f[10]||"").trim(); // col K = código LQF único
       const idTurno="t_"+fi;
       const tel=String(f[4]||"").replace(/\D/g,"");
       const telWA=tel.startsWith("54")?tel:"54"+tel;
@@ -1085,19 +1086,19 @@ function renderAgenda(){
       // Botones según estado
       let acciones="";
       if(estado==="Pendiente"){
-        acciones+=`<button class="btn-turno btn-confirmar" onclick="accionTurno(${fi},'Confirmado','https://wa.me/${telWA}?text=${msgConf}')">
+        acciones+=`<button class="btn-turno btn-confirmar" onclick="accionTurno('${codLQF}','Confirmado','https://wa.me/${telWA}?text=${msgConf}')">
           <svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round"><polyline points="20 6 9 17 4 12"/></svg>Confirmar</button>`;
         acciones+=`<button class="btn-turno btn-cancelar" onclick="accionTurno(${fi},'Cancelado','https://wa.me/${telWA}?text=${msgCanc}')">
           <svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>Cancelar</button>`;
       }
       if(estado==="Confirmado"){
-        acciones+=`<button class="btn-turno btn-cancelar" onclick="accionTurno(${fi},'Cancelado','https://wa.me/${telWA}?text=${msgCanc}')">
+        acciones+=`<button class="btn-turno btn-cancelar" onclick="accionTurno('${codLQF}','Cancelado','https://wa.me/${telWA}?text=${msgCanc}')">
           <svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>Cancelar</button>`;
       }
       if((estado==="Confirmado"||estado==="Realizado")&&!pagado){
         acciones+=`<span style="display:flex;align-items:center;gap:4px;">
           <input class="monto-input" id="monto_${fi}" type="number" placeholder="monto" value="${f[8]||""}"/>
-          <button class="btn-turno btn-pagar" onclick="registrarPago(${fi})">
+          <button class="btn-turno btn-pagar" onclick="registrarPago('${codLQF}',${fi})">
             <svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round"><line x1="12" y1="1" x2="12" y2="23"/><path d="M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6"/></svg>Cobrado</button>
         </span>`;
       }
@@ -1597,33 +1598,30 @@ function toggleMusicPanel(){
 
 
 // ── ACCIONES TURNO DESDE AGENDA ──
-function accionTurno(filaIdx, nuevoEstado, urlWA){
-  // Abrir WA primero (debe ser sincrónico para no ser bloqueado)
+function accionTurno(codLQF, nuevoEstado, urlWA){
   if(urlWA) window.open(urlWA, "_blank");
-  // Luego actualizar el Sheet
   fetch(AS_URL, {
     method: "POST",
-    body: JSON.stringify({accion:"cambiarEstado", filaIdx: filaIdx, estado: nuevoEstado})
+    body: JSON.stringify({accion:"cambiarEstado", codLQF: codLQF, estado: nuevoEstado})
   }).then(function(r){return r.json();})
   .then(function(data){
     if(data.ok){ setTimeout(cargarDatos, 1500); }
-    else { console.error(data.error); }
+    else { console.error("Error cambiarEstado:", data.error); }
   }).catch(function(e){ console.error(e); });
 }
 
-async function registrarPago(filaIdx){
+function registrarPago(codLQF, filaIdx){
   var inp = document.getElementById("monto_"+filaIdx);
   var monto = inp ? parseFloat(inp.value) : 0;
-  if(!monto||monto<=0){ inp.style.borderColor="rgba(224,108,108,.6)"; return; }
-  try {
-    var res = await fetch(AS_URL, {
-      method: "POST",
-      body: JSON.stringify({accion:"registrarPago", filaIdx: filaIdx, monto: monto})
-    });
-    var data = await res.json();
-    if(data.ok){ cargarDatos(); }
+  if(!monto||monto<=0){ if(inp)inp.style.borderColor="rgba(224,108,108,.6)"; return; }
+  fetch(AS_URL, {
+    method: "POST",
+    body: JSON.stringify({accion:"registrarPago", codLQF: codLQF, monto: monto})
+  }).then(function(r){return r.json();})
+  .then(function(data){
+    if(data.ok){ setTimeout(cargarDatos, 1500); }
     else { alert(data.error||"Error al registrar pago."); }
-  } catch(e){ alert("Error de conexión."); }
+  }).catch(function(e){ alert("Error de conexión."); });
 }
 
 setInterval(cargarDatos,5*60*1000);
