@@ -535,12 +535,13 @@ nav{
   color:var(--muted);font-size:.68rem;cursor:pointer;
 }
 .btn-obs-open{
-  padding:4px 8px;border-radius:5px;font-size:.6rem;font-weight:700;
-  letter-spacing:.08em;text-transform:uppercase;
-  background:rgba(20,184,184,.08);color:var(--muted);
-  border:1px solid rgba(20,184,184,.18);cursor:pointer;transition:all .2s;
+  padding:5px 11px;border-radius:5px;font-size:.62rem;font-weight:600;
+  letter-spacing:.06em;text-transform:uppercase;
+  background:rgba(20,184,184,.07);color:var(--muted);
+  border:1px solid rgba(20,184,184,.15);cursor:pointer;transition:all .2s;
+  display:inline-flex;align-items:center;gap:5px;
 }
-.btn-obs-open:hover{background:rgba(20,184,184,.18);color:var(--teal-l);}
+.btn-obs-open:hover{background:rgba(20,184,184,.16);color:var(--teal-l);border-color:rgba(20,184,184,.3);}
 </style>
 
 <!-- LICENCIA -->
@@ -1707,27 +1708,32 @@ function registrarPago(codLQF, filaIdx){
 var obsModalTurnoId="";
 var obsModalFi=-1;
 
-function abrirObsModal(turnoId, nombre, fi, event){
+function abrirObsModalBtn(btn, event){
+  var turnoId=btn.getAttribute("data-tid");
+  var fi=parseInt(btn.getAttribute("data-fi"));
+  var nombre=btn.getAttribute("data-nom");
   obsModalTurnoId=turnoId;
   obsModalFi=fi;
   var modal=document.getElementById("obsModal");
   var input=document.getElementById("obsModalInput");
   var title=document.getElementById("obsModalTitle");
   title.textContent="Obs: "+nombre;
-  // Cargar obs actual desde el input si existe, sino vacío
-  var fs=filas();
+  var fs2=filas();
   var obs="";
-  if(fi>=0&&fi<fs.length) obs=String(fs[fi][16]||"").trim();
+  if(fi>=0&&fi<fs2.length) obs=String(fs2[fi][16]||"").trim();
   input.value=obs;
-  // Posicionar cerca del click
-  var x=event.clientX;
-  var y=event.clientY;
+  var rect=btn.getBoundingClientRect();
   var W=window.innerWidth;
   var H=window.innerHeight;
-  modal.style.left=(x+modal.offsetWidth>W-10?x-modal.offsetWidth-10:x+10)+"px";
-  modal.style.top=(y+180>H?y-180:y+10)+"px";
+  var left=rect.left;
+  var top=rect.bottom+6;
+  if(left+300>W) left=W-310;
+  if(top+200>H) top=rect.top-210;
+  modal.style.left=left+"px";
+  modal.style.top=top+"px";
   modal.classList.add("on");
-  input.focus();
+  setTimeout(function(){input.focus();},50);
+  event.stopPropagation();
 }
 
 function cerrarObsModal(){
