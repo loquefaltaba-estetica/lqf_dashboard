@@ -1154,8 +1154,7 @@ function renderAgenda(){
       if(estado==="Cancelado"&&pagado){
         acciones+='<button class="btn-turno btn-devolucion" onclick="registrarDevolucion(\''+turnoId+'\')"><svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round"><polyline points="9 14 4 9 9 4"/><path d="M20 20v-7a4 4 0 0 0-4-4H4"/></svg>Devolución</button>';
       }
-      // Botón obs siempre visible
-      acciones+='<button class="btn-obs-open" onclick="abrirObsModal(\''+turnoId+'\',\''+nombre+'\',' +fi+ ',event)">📝 Obs</button>';
+      
 
       var c='<div class="turno-card" id="'+idTurno+'">';
       c+='<div class="t-hora">'+horaStr+"</div>";
@@ -1708,6 +1707,9 @@ function registrarPago(codLQF, filaIdx){
 var obsModalTurnoId="";
 var obsModalFi=-1;
 
+function abrirObsModal(turnoId,nombre,fi,event){
+  // alias legacy — no debería llamarse pero por si acaso
+}
 function abrirObsModalBtn(btn, event){
   var turnoId=btn.getAttribute("data-tid");
   var fi=parseInt(btn.getAttribute("data-fi"));
