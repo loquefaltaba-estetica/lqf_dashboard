@@ -488,6 +488,21 @@ nav{
   background:rgba(255,255,255,.06);border:1px solid rgba(94,204,138,.3);
   color:var(--white);font-size:.72rem;font-family:"Montserrat",sans-serif;outline:none;
 }
+.obs-row{display:flex;align-items:center;gap:6px;width:100%;margin-top:4px;}
+.obs-input{
+  flex:1;padding:5px 9px;border-radius:5px;
+  background:rgba(255,255,255,.04);border:1px solid rgba(20,184,184,.18);
+  color:var(--white);font-size:.72rem;font-family:"Montserrat",sans-serif;outline:none;
+  transition:border-color .2s;
+}
+.obs-input:focus{border-color:rgba(20,184,184,.45);}
+.btn-obs{
+  padding:5px 10px;border-radius:5px;font-size:.6rem;font-weight:700;
+  letter-spacing:.1em;text-transform:uppercase;
+  background:rgba(20,184,184,.1);color:var(--teal-l);
+  border:1px solid rgba(20,184,184,.25);cursor:pointer;transition:all .2s;white-space:nowrap;
+}
+.btn-obs:hover{background:rgba(20,184,184,.22);}
 .turno-card{flex-wrap:wrap;}
 </style>
 
@@ -1616,6 +1631,21 @@ function accionTurno(codLQF, nuevoEstado, urlWA){
     if(data.ok){ setTimeout(cargarDatos, 1500); }
     else { console.error("Error cambiarEstado:", data.error); }
   }).catch(function(e){ console.error(e); });
+}
+
+function guardarObs(codLQF, filaIdx){
+  var inp = document.getElementById("obs_"+filaIdx);
+  var obs = inp ? inp.value.trim() : "";
+  fetch(AS_URL, {
+    method: "POST",
+    body: JSON.stringify({accion:"guardarObs", codLQF: codLQF, obs: obs})
+  }).then(function(r){return r.json();})
+  .then(function(data){
+    if(data.ok){
+      if(inp) inp.style.borderColor="rgba(94,204,138,.6)";
+      setTimeout(function(){if(inp)inp.style.borderColor="";}, 2000);
+    } else { alert(data.error||"Error al guardar."); }
+  }).catch(function(e){ alert("Error de conexión."); });
 }
 
 function registrarDevolucion(codLQF){
