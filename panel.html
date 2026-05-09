@@ -1130,8 +1130,9 @@ function renderAgenda(){
       }
 
       var obsActual=String(f[16]||"").trim().replace(/"/g,"&quot;");
-      var c="";
-      c+='<div class="turno-card" id="'+idTurno+'">';
+      var obsId="obs_"+fi;
+      var onclickObs="guardarObs('"+turnoId+"',"+fi+")";
+      var c='<div class="turno-card" id="'+idTurno+'">';
       c+='<div class="t-hora">'+horaStr+"</div>";
       c+='<div class="t-info">';
       c+='<div class="t-nombre">'+nombre+"</div>";
@@ -1142,8 +1143,8 @@ function renderAgenda(){
       c+='<div class="t-monto">'+monto+"</div>";
       if(acciones)c+='<div class="turno-actions" style="width:100%">'+acciones+"</div>";
       c+='<div class="obs-row">';
-      c+='<input class="obs-input" id="obs_'+fi+'" type="text" placeholder="Observaciones..." value="'+obsActual+'"/>';
-      c+='<button class="btn-obs" onclick="guardarObs(\''+turnoId+'\','+fi+')">&#x1F4BE; Guardar</button>';
+      c+='<input class="obs-input" id="'+obsId+'" type="text" placeholder="Observaciones..." value="'+obsActual+'"/>';
+      c+='<button class="btn-obs" onclick="'+onclickObs+'">&#128190; Guardar</button>';
       c+="</div></div>";
       return c;
     }).join("");
