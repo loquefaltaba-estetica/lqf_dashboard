@@ -1129,6 +1129,7 @@ function renderAgenda(){
           Devolución</button>`;
       }
 
+      const obsActual=String(f[16]||"").trim();
       return`<div class="turno-card" id="${idTurno}">
         <div class="t-hora">${horaStr}</div>
         <div class="t-info">
@@ -1139,6 +1140,10 @@ function renderAgenda(){
         ${badge(estado)}
         <div class="t-monto">${monto}</div>
         ${acciones?`<div class="turno-actions" style="width:100%">${acciones}</div>`:""}
+        <div class="obs-row">
+          <input class="obs-input" id="obs_${fi}" type="text" placeholder="Observaciones..." value="${obsActual.replace(/"/g,'&quot;')}"/>
+          <button class="btn-obs" onclick="guardarObs('${turnoId}',${fi})">💾 Guardar</button>
+        </div>
       </div>`;
     }).join("");
     return sep+cards;
