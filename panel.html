@@ -1129,22 +1129,22 @@ function renderAgenda(){
           Devolución</button>`;
       }
 
-      const obsActual=String(f[16]||"").trim();
-      return`<div class="turno-card" id="${idTurno}">
-        <div class="t-hora">${horaStr}</div>
-        <div class="t-info">
-          <div class="t-nombre">${nombre}</div>
-          <div class="t-servicio">${servicio}</div>
-          ${f[7]?`<div class="t-medio">${f[7]}</div>`:""}
-        </div>
-        ${badge(estado)}
-        <div class="t-monto">${monto}</div>
-        ${acciones?`<div class="turno-actions" style="width:100%">${acciones}</div>`:""}
-        <div class="obs-row">
-          <input class="obs-input" id="obs_${fi}" type="text" placeholder="Observaciones..." value="${obsActual.replace(/"/g,'&quot;')}"/>
-          <button class="btn-obs" onclick="guardarObs('${turnoId}',${fi})">💾 Guardar</button>
-        </div>
-      </div>`;
+      var obsActual=String(f[16]||"").trim().replace(/"/g,"&quot;");
+      var cardHTML = '<div class="turno-card" id="'+idTurno+'">';
+      cardHTML += '<div class="t-hora">'+horaStr+'</div>';
+      cardHTML += '<div class="t-info">';
+      cardHTML += '<div class="t-nombre">'+nombre+'</div>';
+      cardHTML += '<div class="t-servicio">'+servicio+'</div>';
+      if(f[7]) cardHTML += '<div class="t-medio">'+f[7]+'</div>';
+      cardHTML += '</div>';
+      cardHTML += badge(estado);
+      cardHTML += '<div class="t-monto">'+monto+'</div>';
+      if(acciones) cardHTML += '<div class="turno-actions" style="width:100%">'+acciones+'</div>';
+      cardHTML += '<div class="obs-row">';
+      cardHTML += '<input class="obs-input" id="obs_'+fi+'" type="text" placeholder="Observaciones..." value="'+obsActual+'"/>';
+      cardHTML += '<button class="btn-obs" onclick="guardarObs(\''+turnoId+'\','+fi+')">💾 Guardar</button>';
+      cardHTML += '</div></div>';
+      return cardHTML;
     }).join("");
     return sep+cards;
   }).join("");
