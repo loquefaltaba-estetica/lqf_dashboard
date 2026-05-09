@@ -993,7 +993,7 @@ function procesarDatos(){
   document.getElementById("kpiClientes").textContent=numCli||"-";
 
   document.getElementById("kpiRealizados").textContent=mesR.length||"0";
-  document.getElementById("kpiRealizadosSub").textContent=fmtMonto(ing)||"$0";
+  document.getElementById("kpiRealizadosSub").textContent="este mes";
 
   renderGrafico(fs);
   window.addEventListener("resize",function(){renderGrafico(fs);});
@@ -1587,7 +1587,7 @@ setInterval(cargarDatos,5*60*1000);
 
   // Realizados mes
   document.getElementById("kpiRealizados").textContent=mesR.length||"0";
-  document.getElementById("kpiRealizadosSub").textContent=fmtMonto(ing)||"$0";
+  document.getElementById("kpiRealizadosSub").textContent="este mes";
 
   // Gráficos
   renderGrafico(fs);
