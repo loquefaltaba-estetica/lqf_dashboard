@@ -1275,7 +1275,7 @@ function mostrarFicha(){
   // Historial desde TURNOS — col 16 = Observaciones (col Q)
   const fs=filas();
   const meses=["Ene","Feb","Mar","Abr","May","Jun","Jul","Ago","Sep","Oct","Nov","Dic"];
-  const hist=fs.filter(function(f){return norm(f[2])===norm(nombre)&&f[6]==="Realizado";})
+  const hist=fs.filter(function(f){return norm(f[2])===norm(nombre)&&(f[6]==="Realizado"||f[6]==="Confirmado");})
                .sort(function(a,b){return new Date(a[0])-new Date(b[0]);});
 
   document.getElementById("fichaTotal").textContent=hist.length+" servicios registrados";
