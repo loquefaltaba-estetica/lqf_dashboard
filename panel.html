@@ -1086,7 +1086,7 @@ function renderAgenda(){
       let acciones="";
       if(estado==="Pendiente"){
         acciones+=`<button class="btn-turno btn-confirmar" onclick="accionTurno(${fi},'Confirmado','https://wa.me/${telWA}?text=${msgConf}')">
-          <svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round"><polyline points="20 6 9 17 4 12"/></svg>Confirmar y WA</button>`;
+          <svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round"><polyline points="20 6 9 17 4 12"/></svg>Confirmar</button>`;
         acciones+=`<button class="btn-turno btn-cancelar" onclick="accionTurno(${fi},'Cancelado','https://wa.me/${telWA}?text=${msgCanc}')">
           <svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>Cancelar</button>`;
       }
@@ -1597,21 +1597,18 @@ function toggleMusicPanel(){
 
 
 // ── ACCIONES TURNO DESDE AGENDA ──
-async function accionTurno(filaIdx, nuevoEstado, urlWA){
-  try {
-    var res = await fetch(AS_URL, {
-      method: "POST",
-      body: JSON.stringify({accion:"cambiarEstado", filaIdx: filaIdx, estado: nuevoEstado})
-    });
-    var data = await res.json();
-    if(data.ok){
-      // Abrir WhatsApp después de actualizar el Sheet
-      window.open(urlWA, "_blank");
-      cargarDatos();
-    } else {
-      alert(data.error||"Error al cambiar estado.");
-    }
-  } catch(e){ alert("Error de conexión."); }
+function accionTurno(filaIdx, nuevoEstado, urlWA){
+  // Abrir WA primero (debe ser sincrónico para no ser bloqueado)
+  if(urlWA) window.open(urlWA, "_blank");
+  // Luego actualizar el Sheet
+  fetch(AS_URL, {
+    method: "POST",
+    body: JSON.stringify({accion:"cambiarEstado", filaIdx: filaIdx, estado: nuevoEstado})
+  }).then(function(r){return r.json();})
+  .then(function(data){
+    if(data.ok){ setTimeout(cargarDatos, 1500); }
+    else { console.error(data.error); }
+  }).catch(function(e){ console.error(e); });
 }
 
 async function registrarPago(filaIdx){
