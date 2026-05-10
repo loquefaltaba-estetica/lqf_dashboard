@@ -1134,8 +1134,8 @@ function renderAgenda(){
       var pagado=String(f[9]||"").toUpperCase()==="SI";
       var monto=f[8]?fmtMonto(f[8]):"";
 
-      var msgConf=encodeURIComponent("Hola "+nombre+" ✨\n\nTu turno quedó confirmado 🌿\n\n🧖 Servicio: "+servicio+"\n📅 Fecha: "+fechaStr+"\n🕐 Hora: "+horaStr+"\n\nTe esperamos en Lo Que Faltaba 💛");
-      var msgCanc=encodeURIComponent("Hola "+nombre+", tu turno de "+servicio+" del "+fechaStr+" a las "+horaStr+" fue cancelado.\n\nSi querés reprogramar, escribinos 🙏");
+      var msgConf=encodeURIComponent("Hola "+nombre+"\n\nTu turno quedó confirmado.\n\nServicio: "+servicio+"\nFecha: "+fechaStr+"\nHora: "+horaStr+"\n\nTe esperamos en Lo Que Faltaba.");
+      var msgCanc=encodeURIComponent("Hola "+nombre+", tu turno de "+servicio+" del "+fechaStr+" a las "+horaStr+" fue cancelado.\n\nSi queres reprogramar, escribinos.");
 
       var acciones="";
       if(estado==="Pendiente"){
@@ -1573,7 +1573,7 @@ function renderGCCanvas(para, servicio, codigo, validaHasta){
   function draw(){
     ctx.drawImage(GC_BG_IMG,0,0,W,H);
     var campos=[
-      {cy:340, cx:1220, val:para},
+      {cy:348, cx:1220, val:para},
       {cy:468, cx:1220, val:servicio},
       {cy:590, cx:1230, val:codigo},
       {cy:710, cx:1250, val:validaHasta}
