@@ -1582,18 +1582,18 @@ function renderGCCanvas(para, servicio, codigo, validaHasta){
     // SERVICIO:    y ≈ 403
     // CÓDIGO:      y ≈ 498
     // VÁLIDA HASTA:y ≈ 593
-    var campos = [
-      { cy: 340, cx: 1250, val: para },
-      { cy: 458, cx: 1220, val: servicio },
-      { cy: 580, cx: 1230, val: codigo },
-      { cy: 710, cx: 1250, val: validaHasta }
+    var campos=[
+      {cy:340, cx:1250, val:para},
+      {cy:458, cx:1220, val:servicio},
+      {cy:580, cx:1230, val:codigo},
+      {cy:710, cx:1250, val:validaHasta}
     ];
-    ctx.font = "bold 34px Montserrat,sans-serif";
-    ctx.fillStyle = "#1de9e9";
-    ctx.textAlign = "center";
-    ctx.textBaseline = "middle";
+    ctx.font="bold 34px Montserrat,sans-serif";
+    ctx.fillStyle="#1de9e9";
+    ctx.textAlign="center";
+    ctx.textBaseline="middle";
     campos.forEach(function(c){
-      ctx.fillText(c.val || "", c.cx, c.cy);
+      ctx.fillText(c.val||"",c.cx,c.cy);
     });
   }
 
