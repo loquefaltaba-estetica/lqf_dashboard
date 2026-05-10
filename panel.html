@@ -666,9 +666,9 @@ nav{
             </button>
           </div>
           <div class="kpi-val" id="kpiIngresos">-</div>
-          <div id="kpiIngresosDetalle" class="kpi-hint" style="margin-top:4px;">
-            <span id="kpiEfectivo" style="color:var(--green)">Ef: -</span> &nbsp;·&nbsp;
-            <span id="kpiTransf" style="color:var(--teal-l)">Tr: -</span>
+          <div id="kpiIngresosDetalle" style="margin-top:4px;">
+            <div class="kpi-hint" style="margin-bottom:3px;font-size:.58rem;letter-spacing:.12em;text-transform:uppercase;color:var(--muted);opacity:.7;">Mes: <span id="kpiEfectivo" style="color:var(--green)">Ef: -</span> &nbsp;·&nbsp; <span id="kpiTransf" style="color:var(--teal-l)">Tr: -</span></div>
+            <div class="kpi-hint" style="font-size:.58rem;letter-spacing:.12em;text-transform:uppercase;color:var(--muted);opacity:.7;">Hoy: <span id="kpiEfHoy" style="color:var(--green)">Ef: -</span> &nbsp;·&nbsp; <span id="kpiTrHoy" style="color:var(--teal-l)">Tr: -</span></div>
           </div>
         </div>
         <div class="kpi orange">
@@ -1088,13 +1088,19 @@ function procesarDatos(){
     turnosHoy.filter(function(f){return f[6]==="Confirmado";}).length+" conf · "+
     turnosHoy.filter(function(f){return f[6]==="Pendiente";}).length+" pend";
 
-  // Ingresos — total + desglose efectivo/transferencia
+  // Ingresos — total mes + desglose mes + desglose hoy
   var ing=mesR.reduce(function(a,f){return a+(Number(f[8])||0);},0);
   document.getElementById("kpiIngresos").textContent=fmtMonto(ing)||"$0";
   var montoEf=mesR.filter(function(f){return norm(f[7])==="efectivo";}).reduce(function(a,f){return a+(Number(f[8])||0);},0);
   var montoTr=mesR.filter(function(f){return norm(f[7])==="transferencia";}).reduce(function(a,f){return a+(Number(f[8])||0);},0);
   document.getElementById("kpiEfectivo").textContent="Ef: "+fmtMonto(montoEf);
   document.getElementById("kpiTransf").textContent="Tr: "+fmtMonto(montoTr);
+  // Ingresos del día
+  var hoyR=turnosHoy.filter(function(f){return f[6]==="Realizado";});
+  var efHoy=hoyR.filter(function(f){return norm(f[7])==="efectivo";}).reduce(function(a,f){return a+(Number(f[8])||0);},0);
+  var trHoy=hoyR.filter(function(f){return norm(f[7])==="transferencia";}).reduce(function(a,f){return a+(Number(f[8])||0);},0);
+  document.getElementById("kpiEfHoy").textContent="Ef: "+(efHoy?fmtMonto(efHoy):"$0");
+  document.getElementById("kpiTrHoy").textContent="Tr: "+(trHoy?fmtMonto(trHoy):"$0");
 
   // Cobrado
   var cob=mesTod.filter(function(f){return norm(f[9])==="si";}).length;
@@ -1655,11 +1661,12 @@ function toggleIngresos(){
   var val=document.getElementById("kpiIngresos");
   var det=document.getElementById("kpiIngresosDetalle");
   var ojo=document.getElementById("ojito");
+  var blur=ingresosVisible?"none":"blur(6px)";
+  val.style.filter=blur;
+  det.style.filter=blur;
   if(ingresosVisible){
-    val.style.filter="none";det.style.filter="none";
     ojo.innerHTML="<path d='M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z'/><circle cx='12' cy='12' r='3'/>";
   } else {
-    val.style.filter="blur(6px)";det.style.filter="blur(6px)";
     ojo.innerHTML="<line x1='1' y1='1' x2='23' y2='23'/><path d='M17.94 17.94A10.07 10.07 0 0 1 12 20c-7 0-11-8-11-8a18.45 18.45 0 0 1 5.06-5.94M9.9 4.24A9.12 9.12 0 0 1 12 4c7 0 11 8 11 8a18.5 18.5 0 0 1-2.16 3.19m-6.72-1.07a3 3 0 1 1-4.24-4.24'/>";
   }
 }
