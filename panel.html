@@ -543,7 +543,7 @@ nav{
 }
 .btn-obs-open:hover{background:rgba(20,184,184,.16);color:var(--teal-l);border-color:rgba(20,184,184,.3);}
 
-/* ── MODAL DRL ── */
+/* ── MODAL DRL PIN ── */
 .drl-overlay{
   display:none;position:fixed;inset:0;z-index:5000;
   background:rgba(3,14,14,.97);align-items:center;justify-content:center;
@@ -551,30 +551,38 @@ nav{
 .drl-overlay.on{display:flex;}
 .drl-box{
   background:linear-gradient(145deg,#061e1e,#0b3535);
-  border:1px solid rgba(20,184,184,.2);border-radius:14px;
-  padding:32px 36px;min-width:280px;text-align:center;
+  border:1px solid rgba(20,184,184,.2);border-radius:20px;
+  padding:32px 28px;width:300px;text-align:center;
+  box-shadow:0 0 60px rgba(20,184,184,.1);
 }
-.drl-title{font-family:"Playfair Display",serif;font-size:1.1rem;color:var(--white);margin-bottom:4px;}
-.drl-sub{font-size:.64rem;letter-spacing:.18em;text-transform:uppercase;color:var(--muted);margin-bottom:20px;}
-.drl-wrap{position:relative;margin-bottom:8px;}
-.drl-input{
-  width:100%;padding:11px 38px 11px 13px;
-  background:rgba(255,255,255,.05);border:1px solid rgba(20,184,184,.25);
-  border-radius:8px;color:var(--white);font-family:"Montserrat",sans-serif;
-  font-size:.86rem;letter-spacing:.18em;outline:none;text-align:center;
+.drl-title{font-family:"Playfair Display",serif;font-size:1.15rem;color:var(--white);margin-bottom:3px;}
+.drl-sub{font-size:.62rem;letter-spacing:.2em;text-transform:uppercase;color:var(--muted);margin-bottom:22px;}
+.drl-dots{display:flex;justify-content:center;gap:14px;margin-bottom:22px;}
+.drl-dot{
+  width:13px;height:13px;border-radius:50%;
+  border:2px solid rgba(20,184,184,.3);
+  transition:all .2s;
 }
-.drl-input.err{border-color:rgba(224,108,108,.7);animation:shake .35s ease;}
-.drl-err{font-size:.68rem;color:var(--red);min-height:14px;margin-bottom:10px;}
-.drl-btn{
-  width:100%;padding:12px;border-radius:8px;
-  background:linear-gradient(135deg,var(--teal),var(--teal-l));
-  color:#fff;font-weight:700;font-size:.74rem;letter-spacing:.16em;
-  text-transform:uppercase;border:none;cursor:pointer;transition:all .2s;
+.drl-dot.filled{background:var(--glow);border-color:var(--glow);box-shadow:0 0 8px rgba(29,233,233,.5);}
+.drl-dot.err{background:var(--red);border-color:var(--red);box-shadow:0 0 8px rgba(224,108,108,.5);}
+.drl-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:10px;margin-bottom:12px;}
+.drl-key{
+  padding:16px 10px;border-radius:12px;
+  background:rgba(255,255,255,.04);border:1px solid rgba(20,184,184,.12);
+  color:var(--white);font-family:"Bebas Neue",cursive;font-size:1.6rem;
+  cursor:pointer;transition:all .15s;user-select:none;
+  -webkit-tap-highlight-color:transparent;
 }
-.drl-btn:hover{box-shadow:0 0 20px rgba(20,184,184,.35);}
+.drl-key:hover,.drl-key:active{
+  background:rgba(20,184,184,.15);border-color:rgba(20,184,184,.4);
+  color:var(--glow);transform:scale(.96);
+}
+.drl-key.drl-del{font-size:1.1rem;color:var(--muted);}
+.drl-key.drl-del:hover,.drl-key.drl-del:active{color:var(--red);border-color:rgba(224,108,108,.3);}
 .drl-cancel{
-  margin-top:10px;background:none;border:none;
-  color:var(--muted);font-size:.7rem;cursor:pointer;letter-spacing:.1em;
+  margin-top:4px;background:none;border:none;
+  color:var(--muted);font-size:.68rem;cursor:pointer;letter-spacing:.12em;
+  text-transform:uppercase;padding:8px;
 }
 .drl-cancel:hover{color:var(--white);}
 </style>
@@ -1790,28 +1798,50 @@ document.addEventListener("click",function(e){
 });
 
 
+var drlPin="";
+var drlPass="28719297";
 function accesoDRL(){
-  document.getElementById("drlInput").value="";
-  document.getElementById("drlErr").textContent="";
-  document.getElementById("drlInput").classList.remove("err");
+  drlPin="";
+  drlActualizarDots();
   document.getElementById("drlOverlay").classList.add("on");
-  setTimeout(function(){document.getElementById("drlInput").focus();},100);
 }
 function drlCerrar(){
   document.getElementById("drlOverlay").classList.remove("on");
+  drlPin="";
+  drlActualizarDots();
 }
-function drlIngresar(){
-  var v=document.getElementById("drlInput").value;
-  var err=document.getElementById("drlErr");
-  if(v==="28719297"){
+function drlTecla(n){
+  if(drlPin.length>=8) return;
+  drlPin+=n;
+  drlActualizarDots();
+  if(drlPin.length===8) setTimeout(drlVerificar,200);
+}
+function drlBorrar(){
+  drlPin=drlPin.slice(0,-1);
+  drlActualizarDots();
+}
+function drlActualizarDots(){
+  for(var i=0;i<8;i++){
+    var dot=document.getElementById("drl-d"+i);
+    if(dot){
+      dot.className="drl-dot"+(i<drlPin.length?" filled":"");
+    }
+  }
+}
+function drlVerificar(){
+  if(drlPin===drlPass){
     drlCerrar();
     window.open("https://docs.google.com/spreadsheets/d/1jbLqzCzeOW76GJSajYK5ood9U-Orrjal1AIUtpqTElY","_blank");
   } else {
-    err.textContent="Clave incorrecta";
-    var inp=document.getElementById("drlInput");
-    inp.classList.add("err");
-    inp.value="";
-    setTimeout(function(){inp.classList.remove("err");err.textContent="";},1500);
+    // Animar error
+    for(var i=0;i<8;i++){
+      var dot=document.getElementById("drl-d"+i);
+      if(dot) dot.className="drl-dot err";
+    }
+    setTimeout(function(){
+      drlPin="";
+      drlActualizarDots();
+    },800);
   }
 }
 
@@ -1847,16 +1877,35 @@ setInterval(cargarDatos,5*60*1000);
 </div>
 
 
-<!-- ── MODAL DRL ── -->
+<!-- ── MODAL DRL PIN ── -->
 <div class="drl-overlay" id="drlOverlay">
   <div class="drl-box">
     <div class="drl-title">Acceso DRL</div>
     <div class="drl-sub">Gestión avanzada</div>
-    <div class="drl-wrap">
-      <input class="drl-input" type="password" id="drlInput" placeholder="••••••••" onkeydown="if(event.key==='Enter')drlIngresar()"/>
+    <div class="drl-dots">
+      <div class="drl-dot" id="drl-d0"></div>
+      <div class="drl-dot" id="drl-d1"></div>
+      <div class="drl-dot" id="drl-d2"></div>
+      <div class="drl-dot" id="drl-d3"></div>
+      <div class="drl-dot" id="drl-d4"></div>
+      <div class="drl-dot" id="drl-d5"></div>
+      <div class="drl-dot" id="drl-d6"></div>
+      <div class="drl-dot" id="drl-d7"></div>
     </div>
-    <div class="drl-err" id="drlErr"></div>
-    <button class="drl-btn" onclick="drlIngresar()">Ingresar</button>
+    <div class="drl-grid">
+      <button class="drl-key" onclick="drlTecla('1')">1</button>
+      <button class="drl-key" onclick="drlTecla('2')">2</button>
+      <button class="drl-key" onclick="drlTecla('3')">3</button>
+      <button class="drl-key" onclick="drlTecla('4')">4</button>
+      <button class="drl-key" onclick="drlTecla('5')">5</button>
+      <button class="drl-key" onclick="drlTecla('6')">6</button>
+      <button class="drl-key" onclick="drlTecla('7')">7</button>
+      <button class="drl-key" onclick="drlTecla('8')">8</button>
+      <button class="drl-key" onclick="drlTecla('9')">9</button>
+      <button class="drl-key" style="visibility:hidden"></button>
+      <button class="drl-key" onclick="drlTecla('0')">0</button>
+      <button class="drl-key drl-del" onclick="drlBorrar()">⌫</button>
+    </div>
     <button class="drl-cancel" onclick="drlCerrar()">Cancelar</button>
   </div>
 </div>
@@ -2381,16 +2430,35 @@ nav{
 </div>
 
 
-<!-- ── MODAL DRL ── -->
+<!-- ── MODAL DRL PIN ── -->
 <div class="drl-overlay" id="drlOverlay">
   <div class="drl-box">
     <div class="drl-title">Acceso DRL</div>
     <div class="drl-sub">Gestión avanzada</div>
-    <div class="drl-wrap">
-      <input class="drl-input" type="password" id="drlInput" placeholder="••••••••" onkeydown="if(event.key==='Enter')drlIngresar()"/>
+    <div class="drl-dots">
+      <div class="drl-dot" id="drl-d0"></div>
+      <div class="drl-dot" id="drl-d1"></div>
+      <div class="drl-dot" id="drl-d2"></div>
+      <div class="drl-dot" id="drl-d3"></div>
+      <div class="drl-dot" id="drl-d4"></div>
+      <div class="drl-dot" id="drl-d5"></div>
+      <div class="drl-dot" id="drl-d6"></div>
+      <div class="drl-dot" id="drl-d7"></div>
     </div>
-    <div class="drl-err" id="drlErr"></div>
-    <button class="drl-btn" onclick="drlIngresar()">Ingresar</button>
+    <div class="drl-grid">
+      <button class="drl-key" onclick="drlTecla('1')">1</button>
+      <button class="drl-key" onclick="drlTecla('2')">2</button>
+      <button class="drl-key" onclick="drlTecla('3')">3</button>
+      <button class="drl-key" onclick="drlTecla('4')">4</button>
+      <button class="drl-key" onclick="drlTecla('5')">5</button>
+      <button class="drl-key" onclick="drlTecla('6')">6</button>
+      <button class="drl-key" onclick="drlTecla('7')">7</button>
+      <button class="drl-key" onclick="drlTecla('8')">8</button>
+      <button class="drl-key" onclick="drlTecla('9')">9</button>
+      <button class="drl-key" style="visibility:hidden"></button>
+      <button class="drl-key" onclick="drlTecla('0')">0</button>
+      <button class="drl-key drl-del" onclick="drlBorrar()">⌫</button>
+    </div>
     <button class="drl-cancel" onclick="drlCerrar()">Cancelar</button>
   </div>
 </div>
