@@ -1018,10 +1018,10 @@ function cargarDatos(){
 
 // ── UTILS ──
 function norm(s){return String(s||"").trim().toLowerCase().normalize("NFD").replace(/[\u0300-\u036f]/g,"");}
-function esHoy(v){if(!v)return false;const h=new Date(),f=new Date(v);return f.getFullYear()===h.getFullYear()&&f.getMonth()===h.getMonth()&&f.getDate()===h.getDate();}
-function esMes(v){if(!v)return false;const h=new Date(),f=new Date(v);return f.getFullYear()===h.getFullYear()&&f.getMonth()===h.getMonth();}
+function esHoy(v){if(!v)return false;var h=new Date(),f=parseFechaSheet(v);if(!f)return false;return f.getFullYear()===h.getFullYear()&&f.getMonth()===h.getMonth()&&f.getDate()===h.getDate();}
+function esMes(v){if(!v)return false;var h=new Date(),f=parseFechaSheet(v);if(!f)return false;return f.getFullYear()===h.getFullYear()&&f.getMonth()===h.getMonth();}
 function fmtHora(v){if(!v)return"--:--";try{const d=new Date(v);if(!isNaN(d))return d.toTimeString().slice(0,5);}catch(e){}return String(v).slice(0,5);}
-function fmtFecha(v){if(!v)return"-";try{const d=new Date(v);if(!isNaN(d))return d.toLocaleDateString("es-AR");}catch(e){}return String(v);}
+function fmtFecha(v){if(!v)return"-";try{var d=parseFechaSheet(v);if(d&&!isNaN(d))return d.toLocaleDateString("es-AR");}catch(e){}return String(v);}
 function fmtMonto(v){const n=Number(String(v||0).replace(/[^\d.]/g,""));if(!n||isNaN(n))return"";return"$"+n.toLocaleString("es-AR");}
 function badge(est){const m={Confirmado:"b-confirmado",Pendiente:"b-pendiente",Realizado:"b-realizado",Cancelado:"b-cancelado"};return`<span class="badge ${m[est]||"b-pendiente"}">${est||"-"}</span>`;}
 function filas(){return datos?( Array.isArray(datos)?datos:(datos.turnos||[]) ).slice(1).filter(f=>f[0]):[];}
@@ -1076,7 +1076,17 @@ function procesarDatos(){
 function dateOffset(n){
   const d=new Date();d.setDate(d.getDate()+n);return d;
 }
-function isoDate(d){return d.toISOString().split("T")[0];}
+function isoDate(d){return d.getFullYear()+"-"+String(d.getMonth()+1).padStart(2,"0")+"-"+String(d.getDate()).padStart(2,"0");}
+function parseFechaSheet(v){
+  // Maneja "dd/mm/yyyy hh:mm:ss" o Date object
+  if(!v) return null;
+  if(v instanceof Date) return v;
+  var s=String(v).trim();
+  // Formato dd/mm/yyyy o dd/mm/yyyy hh:mm:ss
+  var m=s.match(/^(\d{1,2})\/(\d{1,2})\/(\d{4})/);
+  if(m) return new Date(parseInt(m[3]),parseInt(m[2])-1,parseInt(m[1]));
+  return new Date(v);
+}
 function agendaNav(dir){agendaOffset+=dir;renderAgenda();}
 function setFiltro(f,btn){
   agendaFiltro=f;
@@ -1101,9 +1111,7 @@ function renderAgenda(){
   for(let i=0;i<range;i++){
     const dia=dateOffset(start+i);
     const iso=isoDate(dia);
-    let dayRows=fs.filter(f=>{
-      try{const fd=new Date(f[0]);return isoDate(fd)===iso;}catch(e){return false;}
-    });
+    let dayRows=fs.filter(function(f){try{var fd=parseFechaSheet(f[0]);return fd&&isoDate(fd)===iso;}catch(e){return false;}});
     if(agendaFiltro!=="todos") dayRows=dayRows.filter(f=>f[6]===agendaFiltro);
     dayRows.sort((a,b)=>String(a[1]).localeCompare(String(b[1])));
     if(dayRows.length>0||agendaFiltro==="todos"){
