@@ -1564,24 +1564,14 @@ var GC_BG_IMG = (function(){
 })();
 
 function renderGCCanvas(para, servicio, codigo, validaHasta){
-  var overlay = document.getElementById("gcPreviewOverlay");
-  var canvas  = document.getElementById("gcCanvas");
+  var overlay=document.getElementById("gcPreviewOverlay");
+  var canvas=document.getElementById("gcCanvas");
   overlay.classList.add("on");
-
-  // Dimensiones reales de la imagen 1334x888
-  var W = 1536, H = 1024;
-  canvas.width  = W;
-  canvas.height = H;
-  var ctx = canvas.getContext("2d");
-
-  function drawContent(){
-    // Posiciones calibradas sobre los rectángulos oscuros de la imagen:
-    // La imagen tiene 2 columnas: izq=logo/marca, der=campos
-    // Campos (x inicio texto ~830, y centro de cada caja):
-    // PARA:        y ≈ 308
-    // SERVICIO:    y ≈ 403
-    // CÓDIGO:      y ≈ 498
-    // VÁLIDA HASTA:y ≈ 593
+  var W=1536,H=1024;
+  canvas.width=W;canvas.height=H;
+  var ctx=canvas.getContext("2d");
+  function draw(){
+    ctx.drawImage(GC_BG_IMG,0,0,W,H);
     var campos=[
       {cy:340, cx:1250, val:para},
       {cy:458, cx:1220, val:servicio},
@@ -1592,20 +1582,10 @@ function renderGCCanvas(para, servicio, codigo, validaHasta){
     ctx.fillStyle="#1de9e9";
     ctx.textAlign="center";
     ctx.textBaseline="middle";
-    campos.forEach(function(c){
-      ctx.fillText(c.val||"",c.cx,c.cy);
-    });
+    campos.forEach(function(c){ctx.fillText(c.val||"",c.cx,c.cy);});
   }
-
-  if(GC_BG_IMG.complete && GC_BG_IMG.naturalWidth){
-    ctx.drawImage(GC_BG_IMG, 0, 0, W, H);
-    drawContent();
-  } else {
-    GC_BG_IMG.onload = function(){
-      ctx.drawImage(GC_BG_IMG, 0, 0, W, H);
-      drawContent();
-    };
-  }
+  if(GC_BG_IMG.complete&&GC_BG_IMG.naturalWidth){draw();}
+  else{GC_BG_IMG.onload=draw;}
 }
 
 function descargarGC(){
