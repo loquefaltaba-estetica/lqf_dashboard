@@ -542,6 +542,41 @@ nav{
   display:inline-flex;align-items:center;gap:5px;
 }
 .btn-obs-open:hover{background:rgba(20,184,184,.16);color:var(--teal-l);border-color:rgba(20,184,184,.3);}
+
+/* ── MODAL DRL ── */
+.drl-overlay{
+  display:none;position:fixed;inset:0;z-index:5000;
+  background:rgba(3,14,14,.97);align-items:center;justify-content:center;
+}
+.drl-overlay.on{display:flex;}
+.drl-box{
+  background:linear-gradient(145deg,#061e1e,#0b3535);
+  border:1px solid rgba(20,184,184,.2);border-radius:14px;
+  padding:32px 36px;min-width:280px;text-align:center;
+}
+.drl-title{font-family:"Playfair Display",serif;font-size:1.1rem;color:var(--white);margin-bottom:4px;}
+.drl-sub{font-size:.64rem;letter-spacing:.18em;text-transform:uppercase;color:var(--muted);margin-bottom:20px;}
+.drl-wrap{position:relative;margin-bottom:8px;}
+.drl-input{
+  width:100%;padding:11px 38px 11px 13px;
+  background:rgba(255,255,255,.05);border:1px solid rgba(20,184,184,.25);
+  border-radius:8px;color:var(--white);font-family:"Montserrat",sans-serif;
+  font-size:.86rem;letter-spacing:.18em;outline:none;text-align:center;
+}
+.drl-input.err{border-color:rgba(224,108,108,.7);animation:shake .35s ease;}
+.drl-err{font-size:.68rem;color:var(--red);min-height:14px;margin-bottom:10px;}
+.drl-btn{
+  width:100%;padding:12px;border-radius:8px;
+  background:linear-gradient(135deg,var(--teal),var(--teal-l));
+  color:#fff;font-weight:700;font-size:.74rem;letter-spacing:.16em;
+  text-transform:uppercase;border:none;cursor:pointer;transition:all .2s;
+}
+.drl-btn:hover{box-shadow:0 0 20px rgba(20,184,184,.35);}
+.drl-cancel{
+  margin-top:10px;background:none;border:none;
+  color:var(--muted);font-size:.7rem;cursor:pointer;letter-spacing:.1em;
+}
+.drl-cancel:hover{color:var(--white);}
 </style>
 
 <!-- LICENCIA -->
@@ -1756,12 +1791,27 @@ document.addEventListener("click",function(e){
 
 
 function accesoDRL(){
-  var pass=prompt("Ingresá la clave de acceso:");
-  if(pass===null) return;
-  if(pass==="28719297"){
+  document.getElementById("drlInput").value="";
+  document.getElementById("drlErr").textContent="";
+  document.getElementById("drlInput").classList.remove("err");
+  document.getElementById("drlOverlay").classList.add("on");
+  setTimeout(function(){document.getElementById("drlInput").focus();},100);
+}
+function drlCerrar(){
+  document.getElementById("drlOverlay").classList.remove("on");
+}
+function drlIngresar(){
+  var v=document.getElementById("drlInput").value;
+  var err=document.getElementById("drlErr");
+  if(v==="28719297"){
+    drlCerrar();
     window.open("https://docs.google.com/spreadsheets/d/1jbLqzCzeOW76GJSajYK5ood9U-Orrjal1AIUtpqTElY","_blank");
   } else {
-    alert("Clave incorrecta.");
+    err.textContent="Clave incorrecta";
+    var inp=document.getElementById("drlInput");
+    inp.classList.add("err");
+    inp.value="";
+    setTimeout(function(){inp.classList.remove("err");err.textContent="";},1500);
   }
 }
 
@@ -1793,6 +1843,21 @@ setInterval(cargarDatos,5*60*1000);
   <div class="obs-modal-btns">
     <button class="obs-modal-save" onclick="guardarObsModal()">Guardar</button>
     <button class="obs-modal-cancel" onclick="cerrarObsModal()">Cancelar</button>
+  </div>
+</div>
+
+
+<!-- ── MODAL DRL ── -->
+<div class="drl-overlay" id="drlOverlay">
+  <div class="drl-box">
+    <div class="drl-title">Acceso DRL</div>
+    <div class="drl-sub">Gestión avanzada</div>
+    <div class="drl-wrap">
+      <input class="drl-input" type="password" id="drlInput" placeholder="••••••••" onkeydown="if(event.key==='Enter')drlIngresar()"/>
+    </div>
+    <div class="drl-err" id="drlErr"></div>
+    <button class="drl-btn" onclick="drlIngresar()">Ingresar</button>
+    <button class="drl-cancel" onclick="drlCerrar()">Cancelar</button>
   </div>
 </div>
 
@@ -2312,6 +2377,21 @@ nav{
   <div class="obs-modal-btns">
     <button class="obs-modal-save" onclick="guardarObsModal()">Guardar</button>
     <button class="obs-modal-cancel" onclick="cerrarObsModal()">Cancelar</button>
+  </div>
+</div>
+
+
+<!-- ── MODAL DRL ── -->
+<div class="drl-overlay" id="drlOverlay">
+  <div class="drl-box">
+    <div class="drl-title">Acceso DRL</div>
+    <div class="drl-sub">Gestión avanzada</div>
+    <div class="drl-wrap">
+      <input class="drl-input" type="password" id="drlInput" placeholder="••••••••" onkeydown="if(event.key==='Enter')drlIngresar()"/>
+    </div>
+    <div class="drl-err" id="drlErr"></div>
+    <button class="drl-btn" onclick="drlIngresar()">Ingresar</button>
+    <button class="drl-cancel" onclick="drlCerrar()">Cancelar</button>
   </div>
 </div>
 
